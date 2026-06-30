@@ -1160,6 +1160,7 @@ const KanaApp = (() => {
       opt.disabled = true;
     });
 
+    window.recordDailyGoal?.("quiz3");
     saveProgress();
     setTimeout(() => {
       currentQuizIndex++;
@@ -1245,6 +1246,7 @@ const KanaApp = (() => {
       const delay = intervals[Math.min(cardSrs.level - 1, intervals.length - 1)];
       cardSrs.nextReview = Date.now() + delay;
       awardXP(2);
+      window.recordDailyGoal?.("flip5");
     } else {
       cardSrs.level = 0;
       cardSrs.nextReview = Date.now() + 60000;
@@ -1384,6 +1386,7 @@ const KanaApp = (() => {
 
     learned[currentDrawingKana.symbol] = true;
     awardXP(20);
+    window.recordDailyGoal?.("draw1");
     saveProgress();
   };
 
@@ -2252,6 +2255,8 @@ const KanaApp = (() => {
     }
 
     renderCharts();
+    // Re-apply heatmap after chart re-render
+    if (heatmapActive) setTimeout(applyHeatmap, 50);
   };
 
   const init = () => {
@@ -2418,6 +2423,8 @@ const KanaApp = (() => {
     initPanelCollapse();
     updateLanguageUI();
     updateGamificationUI();
+    renderDailyChallenge();
+    window.srsData = srsData;
   };
 
   return { init };
