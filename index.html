@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hiragana & Katakana Learning Chart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Noto+Sans+Myanmar:wght@400;700;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body data-theme="light">
+    <main class="app" role="main" aria-label="Japanese Kana Learning Application">
+      <section class="hero" aria-label="Application header and featured character">
+        <div>
+          <p class="eyebrow" id="appEyebrow">Japanese Kana System</p>
+          <h1>Master Kana Like a Local</h1>
+          <p class="subtitle" id="appSubtitle">
+            Learn Hiragana, Katakana, pronunciation rules, complex sounds, and
+            teacher tips in one clean white interface.
+          </p>
+        </div>
+
+        <div class="hero-card" aria-live="polite" aria-label="Featured character display">
+          <span class="hero-symbol" id="heroSymbol" aria-label="Kana character">あ</span>
+          <span class="hero-romaji" id="heroRomaji" aria-label="Romanized pronunciation">a</span>
+          <div class="audio-wave" id="audioWave" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="controls" aria-label="Navigation and search controls">
+        <div role="tablist" class="tabs">
+          <button class="tab active" data-script="hiragana" role="tab" aria-selected="true" aria-controls="mainChart dakutenChart comboChart complexChart practiceWords">Hiragana</button>
+          <button class="tab" data-script="katakana" role="tab" aria-selected="false" aria-controls="mainChart dakutenChart comboChart complexChart practiceWords">Katakana</button>
+        </div>
+
+        <div class="search-box" role="search">
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="Search: ka, shi, っ, ファ..."
+            aria-label="Search kana characters, romaji, or words"
+          />
+          <button id="voiceSearchBtn" aria-label="Voice search" title="Speak to search" class="voice-search-btn"><i class="bi bi-mic"></i></button>
+          <button id="clearSearch" aria-label="Clear search">Clear</button>
+        </div>
+
+        <div class="toolbar">
+          <button id="quizToggle" aria-label="Start quiz mode" title="Test yourself"><i class="bi bi-pencil-square"></i> Quiz</button>
+          <button id="flashcardToggle" aria-label="Flashcard mode" title="Flip to reveal"><i class="bi bi-credit-card"></i> Cards</button>
+          <button id="drawingToggle" aria-label="Drawing practice" title="Practice drawing"><i class="bi bi-brush"></i> Draw</button>
+          <button id="typingToggle" aria-label="Typing practice" title="Type romaji"><i class="bi bi-keyboard"></i> Type</button>
+          <button id="statsToggle" aria-label="View statistics" title="Your progress"><i class="bi bi-graph-up"></i> Stats</button>
+          <button id="speedControl" aria-label="Adjust speech speed" title="Speed control"><i class="bi bi-sliders"></i> Speed</button>
+          <button id="langToggle" aria-label="Toggle language" title="Switch language"><i class="bi bi-translate"></i> EN</button>
+          <button id="darkModeToggle" aria-label="Toggle dark mode" title="Dark mode"><i class="bi bi-moon-stars"></i></button>
+        </div>
+      </section>
+
+      <section class="stats" aria-label="Learning information">
+        <div>
+          <strong id="scriptTitle">Hiragana</strong>
+          <span id="scriptDescription">Native Japanese words and grammar</span>
+        </div>
+        <div>
+          <strong id="progressLabel">Progress</strong>
+          <span id="progressText">Loading...</span>
+        </div>
+        <div id="speedContainer" class="speed-control hidden">
+          <strong id="speedLabelStats">Speed</strong>
+          <input type="range" id="speedSlider" min="0.5" max="1.5" step="0.25" value="1" aria-label="Pronunciation speed">
+          <span id="speedLabel">1.0x</span>
+        </div>
+      </section>
+
+      <section class="teacher-panel" aria-label="Teacher tips">
+        <div class="teacher-note">
+          <p class="label" id="teacherTipLabel">Local Teacher Tip</p>
+          <h2 id="teacherTipTitle">Start with rhythm</h2>
+          <p id="teacherTipText">
+            Japanese is spoken in small sound beats called mora. Try saying each kana evenly: あ・い・う・え・お.
+          </p>
+        </div>
+
+        <button class="next-tip" id="nextTip" aria-label="Show next teacher tip">Next Tip</button>
+      </section>
+
+      <section class="chart-section" aria-labelledby="mainChartTitle">
+        <div class="section-head">
+          <h2 id="mainChartTitle">Main Chart</h2>
+          <p id="mainChartDesc">Basic Japanese sounds</p>
+          <button id="chartViewToggle" class="view-toggle" aria-label="Toggle between grid and table view"><i class="bi bi-list"></i> Table</button>
+        </div>
+        <div id="mainChart" class="kana-grid" role="region" aria-label="Main kana character grid"></div>
+        <div id="mainTable" class="kana-table hidden" role="region" aria-label="Main kana character table"></div>
+      </section>
+
+      <section class="chart-section" aria-labelledby="dakutenChartTitle">
+        <div class="section-head">
+          <h2 id="dakutenChartTitle">Dakuten & Handakuten</h2>
+          <p id="dakutenChartDesc">Voiced sounds: ga, za, da, ba, pa</p>
+        </div>
+        <div id="dakutenChart" class="kana-grid compact" role="region" aria-label="Dakuten and handakuten kana characters"></div>
+      </section>
+
+      <section class="chart-section" aria-labelledby="comboChartTitle">
+        <div class="section-head">
+          <h2 id="comboChartTitle">Combination Sounds</h2>
+          <p id="comboChartDesc">Small ya, yu, yo sounds</p>
+        </div>
+        <div id="comboChart" class="kana-grid compact" role="region" aria-label="Combination kana characters"></div>
+      </section>
+
+      <section class="chart-section" aria-labelledby="complexChartTitle">
+        <div class="section-head">
+          <h2 id="complexChartTitle">More Complex Sounds</h2>
+          <p id="complexChartDesc">Small kana, long vowels, doubled consonants, and foreign sounds</p>
+        </div>
+        <div id="complexChart" class="lesson-grid" role="region" aria-label="Complex sound explanations"></div>
+      </section>
+
+      <div id="wordBuilderSection" class="word-builder-floating">
+        <div class="builder-handle" id="builderHandle" title="Drag to move">
+          <span id="wordBuilderTitle" class="handle-title">Word Builder</span>
+          <button id="collapseBuilderBtn" class="collapse-btn" title="Collapse/Expand"><i class="bi bi-chevron-down"></i></button>
+        </div>
+        <div class="word-builder-content" id="wordBuilderContent">
+          <p id="wordBuilderDesc" class="builder-desc">Click character cards to add them. Drag tiles to rearrange.</p>
+          <input type="text" id="romajiInput" class="builder-input" placeholder="Type Romaji or Burmese phonetics here..." autocomplete="off" />
+          <div class="word-builder-display">
+            <div class="builder-chars" id="builderChars">Click cards above to build a word...</div>
+            <div class="builder-pronunciations">
+              <span class="builder-romaji" id="builderRomaji"></span>
+              <span class="builder-burmese" id="builderBurmese"></span>
+            </div>
+          </div>
+          <div class="word-builder-controls">
+            <button id="speakBuilderBtn" class="builder-btn speak-btn" title="Pronounce word"><i class="bi bi-volume-up-fill"></i> Speak Word</button>
+            <button id="saveBuilderWordBtn" class="builder-btn save-btn" title="Save to Practice Words"><i class="bi bi-plus-circle-fill"></i> Save Word</button>
+            <button id="clearBuilderBtn" class="builder-btn clear-btn" title="Clear word"><i class="bi bi-trash-fill"></i> Clear</button>
+          </div>
+        </div>
+      </div>
+
+      <section class="chart-section" aria-labelledby="practiceWordsTitle">
+        <div class="section-head">
+          <h2 id="practiceWordsTitle">Practice Words</h2>
+          <p id="practiceWordsDesc">Real beginner words from daily Japanese</p>
+        </div>
+        <div id="practiceWords" class="word-grid" role="region" aria-label="Practice words from daily Japanese"></div>
+      </section>
+    </main>
+
+    <div id="quizModal" class="modal hidden" role="dialog" aria-labelledby="quizTitle" aria-hidden="true">
+      <div class="modal-content">
+        <div class="modal-header">
+    <div id="quizModal" class="modal hidden" role="dialog" aria-labelledby="quizTitle" aria-hidden="true">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="quizTitle">Quiz Mode</h2>
+          <button id="closeQuiz" aria-label="Close quiz" class="close-btn"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div id="quizContainer" class="quiz-container">
+          <div id="quizQuestion" class="quiz-question"></div>
+          <div id="quizOptions" class="quiz-options"></div>
+          <div id="quizResult" class="quiz-result hidden"></div>
+          <div class="quiz-progress">
+            <span id="quizScore">0/0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="flashcardModal" class="modal hidden" role="dialog" aria-labelledby="flashcardTitle" aria-hidden="true">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="flashcardTitle">Flashcard Mode</h2>
+          <button id="closeFlashcard" aria-label="Close flashcards" class="close-btn"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div id="flashcardContainer" class="flashcard-container">
+          <div id="flashcard" class="flashcard" role="button" tabindex="0" aria-label="Click to flip card">
+            <div class="flashcard-inner">
+              <div class="flashcard-front" id="flashcardFront"></div>
+              <div class="flashcard-back" id="flashcardBack"></div>
+            </div>
+          </div>
+          <div class="flashcard-controls">
+            <button id="prevCard" aria-label="Previous card"><i class="bi bi-chevron-left"></i> Prev</button>
+            <span id="cardProgress">1/1</span>
+            <button id="nextCard" aria-label="Next card">Next <i class="bi bi-chevron-right"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="drawingModal" class="modal hidden" role="dialog" aria-labelledby="drawingTitle" aria-hidden="true">
+      <div class="modal-content modal-large">
+        <div class="modal-header">
+          <h2 id="drawingTitle">Drawing Practice</h2>
+          <button id="closeDrawing" aria-label="Close drawing pad" class="close-btn"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div id="drawingContainer" class="drawing-container">
+          <div class="drawing-prompt">
+            <p>Draw this character:</p>
+            <div id="drawingTarget" class="drawing-target"></div>
+            <button id="newDrawing" aria-label="Next character"><i class="bi bi-arrow-clockwise"></i> New</button>
+          </div>
+          <div class="drawing-canvas-wrapper">
+            <canvas id="drawingCanvas" width="400" height="400" aria-label="Drawing canvas for practice"></canvas>
+            <p class="canvas-hint" id="canvasHintLabel">Draw on the canvas</p>
+          </div>
+          <div class="drawing-controls">
+            <button id="clearCanvas" aria-label="Clear canvas"><i class="bi bi-trash"></i> Clear</button>
+            <button id="submitDrawing" aria-label="Submit drawing"><i class="bi bi-check"></i> Done</button>
+          </div>
+          <div id="drawingFeedback" class="drawing-feedback hidden"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="typingModal" class="modal hidden" role="dialog" aria-labelledby="typingTitle" aria-hidden="true">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="typingTitle">Typing Practice</h2>
+          <button id="closeTyping" aria-label="Close typing practice" class="close-btn"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div id="typingContainer" class="typing-container">
+          <div class="typing-prompt">
+            <p id="typingPromptLabel">Type the romaji for:</p>
+            <div id="typingTarget" class="typing-target"></div>
+          </div>
+          <div class="typing-input-group">
+            <input type="text" id="typingInput" placeholder="Type romaji..." autocomplete="off" aria-label="Type romaji">
+            <button id="submitTyping" aria-label="Submit answer"><i class="bi bi-arrow-return-right"></i></button>
+          </div>
+          <div id="typingFeedback" class="typing-feedback hidden"></div>
+          <div class="typing-progress">
+            <span id="typingScore">0/0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="statsModal" class="modal hidden" role="dialog" aria-labelledby="statsTitle" aria-hidden="true">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="statsTitle">Learning Statistics</h2>
+          <button id="closeStats" aria-label="Close statistics" class="close-btn"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div id="statsContainer" class="stats-container">
+          <div class="stat-card">
+            <div class="stat-label" id="statTotalLabel">Total Learned</div>
+            <div class="stat-value" id="statTotal">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label" id="statHiraganaLabel">Hiragana</div>
+            <div class="stat-value" id="statHiragana">0/46</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label" id="statKatakanaLabel">Katakana</div>
+            <div class="stat-value" id="statKatakana">0/46</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label" id="statStreakLabel">Learning Streak</div>
+            <div class="stat-value" id="statStreak">0 days</div>
+          </div>
+          <div id="favoritesList" class="favorites-list"></div>
+          <button id="resetStats" class="reset-btn"><i class="bi bi-arrow-counterclockwise"></i> Reset Progress</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="words.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
