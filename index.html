@@ -59,6 +59,7 @@
         <div role="tablist" class="tabs">
           <button class="tab active" data-script="hiragana" role="tab" aria-selected="true" aria-controls="mainChart dakutenChart comboChart complexChart practiceWords">Hiragana</button>
           <button class="tab" data-script="katakana" role="tab" aria-selected="false" aria-controls="mainChart dakutenChart comboChart complexChart practiceWords">Katakana</button>
+          <button class="tab" id="numbersTab" data-script="numbers" role="tab" aria-selected="false" aria-controls="mainChart practiceWords">Numbers</button>
         </div>
 
         <div class="search-box" role="search">
@@ -144,7 +145,7 @@
         <div id="mainTable" class="kana-table hidden" role="region" aria-label="Main kana character table"></div>
       </section>
 
-      <section class="chart-section" aria-labelledby="dakutenChartTitle">
+      <section id="dakutenChartSection" class="chart-section" aria-labelledby="dakutenChartTitle">
         <div class="section-head">
           <h2 id="dakutenChartTitle">Dakuten & Handakuten</h2>
           <p id="dakutenChartDesc">Voiced sounds: ga, za, da, ba, pa</p>
@@ -152,7 +153,7 @@
         <div id="dakutenChart" class="kana-grid compact" role="region" aria-label="Dakuten and handakuten kana characters"></div>
       </section>
 
-      <section class="chart-section" aria-labelledby="comboChartTitle">
+      <section id="comboChartSection" class="chart-section" aria-labelledby="comboChartTitle">
         <div class="section-head">
           <h2 id="comboChartTitle">Combination Sounds</h2>
           <p id="comboChartDesc">Small ya, yu, yo sounds</p>
@@ -160,7 +161,7 @@
         <div id="comboChart" class="kana-grid compact" role="region" aria-label="Combination kana characters"></div>
       </section>
 
-      <section class="chart-section" aria-labelledby="complexChartTitle">
+      <section id="complexChartSection" class="chart-section" aria-labelledby="complexChartTitle">
         <div class="section-head">
           <h2 id="complexChartTitle">More Complex Sounds</h2>
           <p id="complexChartDesc">Small kana, long vowels, doubled consonants, and foreign sounds</p>

@@ -4,6 +4,7 @@ const translations = {
     subtitle: "Learn Hiragana, Katakana, pronunciation rules, complex sounds, and teacher tips in one clean white interface.",
     tabHiragana: "Hiragana",
     tabKatakana: "Katakana",
+    tabNumbers: "Numbers",
     searchPlaceholder: "Search: ka, shi, っ, ファ...",
     clearSearch: "Clear",
     btnQuiz: "<i class=\"bi bi-pencil-square\"></i> Quiz",
@@ -80,6 +81,7 @@ const translations = {
     subtitle: "ဟိရဂန၊ ခတခန၊ အသံထွက်စည်းမျဉ်းများ၊ ပေါင်းစပ်အသံများနှင့် ဆရာ့လမ်းညွှန်ချက်များကို တစ်နေရာတည်းတွင် လေ့လာပါ။",
     tabHiragana: "ဟိရဂန",
     tabKatakana: "ခတခန",
+    tabNumbers: "ကိန်းဂဏန်းများ",
     searchPlaceholder: "ရှာဖွေရန်: ka, shi, っ, ファ...",
     clearSearch: "ရှင်းလင်းရန်",
     btnQuiz: "<i class=\"bi bi-pencil-square\"></i> ဉာဏ်စမ်း",
@@ -317,6 +319,86 @@ const kanaData = {
     words: practiceWordsData.hiragana,
   },
 
+  numbers: {
+    title: "Numbers",
+    description: "Japanese numerals and counting systems",
+    main: [
+      ["0", "zero / rei", "သုည"],
+      ["1", "ichi", "တစ်"],
+      ["2", "ni", "နှစ်"],
+      ["3", "san", "သုံး"],
+      ["4", "shi / yon", "လေး"],
+      ["5", "go", "ငါး"],
+      ["6", "roku", "ခြောက်"],
+      ["7", "shichi / nana", "ခုနစ်"],
+      ["8", "hachi", "ရှစ်"],
+      ["9", "kyuu", "ကိုး"],
+      ["10", "juu", "ဆယ်"],
+      ["20", "ni-juu", "နှစ်ဆယ်"],
+      ["30", "san-juu", "သုံးဆယ်"],
+      ["40", "shi-juu / yon-juu", "လေးဆယ်"],
+      ["50", "go-juu", "ငါးဆယ်"],
+      ["60", "roku-juu", "ခြောက်ဆယ်"],
+      ["70", "shichi-juu / nana-juu", "ခုနစ်ဆယ်"],
+      ["80", "hachi-juu", "ရှစ်ဆယ်"],
+      ["90", "kyuu-juu", "ကိုးဆယ်"],
+      ["100", "hyaku", "တစ်ရာ"],
+      ["1000", "sen", "တစ်ထောင်"],
+      ["10000", "man", "တစ်သောင်း"],
+    ],
+    dakuten: [],
+    combo: [],
+    complex: [
+      {
+        title: "Native Numbers (1-10)",
+        example: "ひとり, ふたり, みっつ, よっつ",
+        romaji: "hitori, futari, mittsu, yottsu",
+        note: "Japanese has native number words used for counting without counters or for small amounts.",
+      },
+      {
+        title: "Counters with 〜個 (ko)",
+        example: "ねこ3匹",
+        romaji: "neko san-biki",
+        note: "Different counters for different objects: 枚 for flat things, 匹 for animals, 個 for general items.",
+      },
+      {
+        title: "Age Counter 〜才/歳 (sai)",
+        example: "わたしは 20才です",
+        romaji: "watashi wa ni-juu-sai desu",
+        note: "Use 才 (sai) to express someone's age. Example: I am 20 years old.",
+      },
+      {
+        title: "Floor Counter 〜階 (kai)",
+        example: "3階のオフィス",
+        romaji: "san-kai no ofisu",
+        note: "Use 階 (kai) for floors in buildings. Example: 3rd floor office.",
+      },
+      {
+        title: "Time: Hours 〜時 (ji)",
+        example: "午前 8 時",
+        romaji: "gozen hachi-ji",
+        note: "Use 時 (ji) for hours. Example: 8 o'clock in the morning.",
+      },
+      {
+        title: "Time: Minutes 〜分 (fun/pun)",
+        example: "15分",
+        romaji: "juu-go-fun",
+        note: "Use 分 (fun) for minutes. Example: 15 minutes.",
+      },
+    ],
+    words: [
+      ["一番", "ichiban", "first / number one"],
+      ["電話番号", "denwa bangou", "phone number"],
+      ["住所番号", "jusho bangou", "address number"],
+      ["運転免許証番号", "unten menkyosho bangou", "driver's license number"],
+      ["誕生日", "tanjoubi", "birthday"],
+      ["時間", "jikan", "time / hours"],
+      ["分", "fun", "minutes"],
+      ["秒", "byou", "seconds"],
+      ["今日は何月何日ですか？", "kyou wa nan-gatsu nan-nichi desu ka", "What's today's date?"],
+    ],
+  },
+
   katakana: {
     title: "Katakana",
     description: "Foreign words, names, loanwords, and emphasis",
@@ -530,6 +612,24 @@ const teacherTips = [
     textEn: "Do not only look at the chart. Write each kana while saying the sound out loud.",
     textMy: "ဇယားကို ကြည့်ရုံတင်မကဘဲ အက္ခရာတစ်ခုချင်းစီကို ရေးသားနေစဉ် အသံထွက်ကိုပါ အသံထွက်ဆိုပြီး လေ့ကျင့်ပါ။",
   },
+  {
+    titleEn: "Counters are crucial",
+    titleMy: "ကောက်ယူမှုကျ အရေးကြီးပါသည်",
+    textEn: "Japanese numbers always need counters (枚, 匹, 個, etc). Just saying 'san' (3) sounds incomplete. Always practice numbers with their counters.",
+    textMy: "ဂျပန်ကိန်းဂဏန်းများတွင် အမြဲတမ်း ကောက်ယူမှုများ လိုအပ်ပါသည်။ 'san' (3) ကိုသာ ပြောတာ မဆုံးဆောင်ချုံးပါ။ အမြဲတမ်း ကိန်းဂဏန်းများကို ကောက်ယူမှုများ အတူတကွ လေ့ကျင့်ပါ။",
+  },
+  {
+    titleEn: "Different words for 4 and 7",
+    titleMy: "4 နှင့် 7 အတွက် ကွဲပြားသောစကားလုံးများ",
+    textEn: "4 can be 'shi' or 'yon', and 7 can be 'shichi' or 'nana'. Use 'yon' and 'nana' in most daily situations. 'Shi' and 'shichi' are more formal or used in names.",
+    textMy: "4 သည် 'shi' သို့မဟုတ် 'yon' ဖြစ်နိုင်ပြီး 7 သည် 'shichi' သို့မဟုတ် 'nana' ဖြစ်နိုင်ပါသည်။ နေ့စဉ်အခြေအနေများတွင် 'yon' နှင့် 'nana' ကို အသုံးပြုပါ။",
+  },
+  {
+    titleEn: "Japanese numbers flow differently",
+    titleMy: "ဂျပန်ကိန်းဂဏန်းများ ကွဲပြားစွာ စီးဆင်းပါသည်",
+    textEn: "Japanese counts by tens differently: 10 (juu), 20 (ni-juu), 100 (hyaku), 1000 (sen), 10000 (man). Unlike English, there's no huge name jump—it resets at 万 (man).",
+    textMy: "ဂျပန်သည် ဆယ်ခုစီ ကွဲပြားစွာ ရေတွက်ပါသည်- 10 (juu), 20 (ni-juu), 100 (hyaku), 1000 (sen), 10000 (man)။",
+  },
 ];
 
 window.kanaData = kanaData;
@@ -620,8 +720,10 @@ const KanaApp = (() => {
     // Tabs
     const hiraganaTab = document.querySelector('[data-script="hiragana"]');
     const katakanaTab = document.querySelector('[data-script="katakana"]');
+    const numbersTab = document.querySelector('[data-script="numbers"]');
     if (hiraganaTab) hiraganaTab.textContent = t.tabHiragana;
     if (katakanaTab) katakanaTab.textContent = t.tabKatakana;
+    if (numbersTab) numbersTab.textContent = t.tabNumbers;
     
     // Search
     if (elements.searchInput) elements.searchInput.placeholder = t.searchPlaceholder;
@@ -983,13 +1085,49 @@ const KanaApp = (() => {
 
   const renderCharts = () => {
     const data = kanaData[currentScript];
+    const isNumbers = currentScript === "numbers";
 
     elements.scriptTitle.textContent = data.title;
     elements.scriptDescription.textContent = data.description;
 
+    // Update chart section headings based on script type
+    const mainChartTitle = document.getElementById("mainChartTitle");
+    const mainChartDesc = document.getElementById("mainChartDesc");
+    const complexChartTitle = document.getElementById("complexChartTitle");
+    const complexChartDesc = document.getElementById("complexChartDesc");
+
+    if (mainChartTitle) mainChartTitle.textContent = data.title;
+    if (mainChartDesc) mainChartDesc.textContent = data.description;
+
+    if (isNumbers) {
+      if (complexChartTitle) complexChartTitle.textContent = "Counters & Counting Patterns";
+      if (complexChartDesc) complexChartDesc.textContent = "Common counter words and how to use numbers in context";
+    } else {
+      if (complexChartTitle) complexChartTitle.textContent = "More Complex Sounds";
+      if (complexChartDesc) complexChartDesc.textContent = "Small kana, long vowels, doubled consonants, and foreign sounds";
+    }
+
+    // Show/hide sections based on script type
+    const dakutenSection = document.getElementById("dakutenChartSection");
+    const comboSection = document.getElementById("comboChartSection");
+    const complexSection = document.getElementById("complexChartSection");
+
+    if (dakutenSection) {
+      dakutenSection.classList.toggle("hidden", isNumbers);
+    }
+    if (comboSection) {
+      comboSection.classList.toggle("hidden", isNumbers);
+    }
+    if (complexSection) {
+      // Show complex section for numbers, hide for kana
+      complexSection.classList.toggle("hidden", !isNumbers);
+    }
+
     renderKanaChart(elements.mainChart, data.main);
-    renderKanaChart(elements.dakutenChart, data.dakuten);
-    renderKanaChart(elements.comboChart, data.combo);
+    if (!isNumbers) {
+      renderKanaChart(elements.dakutenChart, data.dakuten);
+      renderKanaChart(elements.comboChart, data.combo);
+    }
     renderLessonCards(elements.complexChart, data.complex);
 
     const customWords = JSON.parse(localStorage.getItem("customWords") || "[]");
@@ -1395,43 +1533,124 @@ const KanaApp = (() => {
     elements.drawingModal.setAttribute("aria-hidden", "true");
   };
 
+  const ROW_GROUPS = [
+    { label: "vowel",  en: "Vowel",    my: "သရ",    color: "#6366f1", count: 5  },
+    { label: "k",      en: "K-row",    my: "က-တန်း", color: "#0ea5e9", count: 5  },
+    { label: "s",      en: "S-row",    my: "စ-တန်း", color: "#0ea5e9", count: 5  },
+    { label: "t",      en: "T-row",    my: "တ-တန်း", color: "#0ea5e9", count: 5  },
+    { label: "n",      en: "N-row",    my: "န-တန်း", color: "#0ea5e9", count: 5  },
+    { label: "h",      en: "H-row",    my: "ဟ-တန်း", color: "#0ea5e9", count: 5  },
+    { label: "m",      en: "M-row",    my: "မ-တန်း", color: "#0ea5e9", count: 5  },
+    { label: "y",      en: "Y-row",    my: "ယ-တန်း", color: "#8b5cf6", count: 3  },
+    { label: "r",      en: "R-row",    my: "ရ-တန်း", color: "#0ea5e9", count: 5  },
+    { label: "w",      en: "W-row",    my: "ဝ-တန်း", color: "#8b5cf6", count: 2  },
+    { label: "n_final",en: "N",        my: "နနောက်", color: "#10b981", count: 1  },
+  ];
+
+  const VOWEL_HEADERS = ["a", "i", "u", "e", "o"];
+
   const createKanaTable = (items) => {
+    // Filter out trailing empties but keep structural blanks
+    const wrapper = document.createElement("div");
+    wrapper.className = "kana-table-wrapper";
+
     const table = document.createElement("table");
     table.className = "kana-table";
 
-    const rowSize = 5;
-    const rows = Math.ceil(items.length / rowSize);
+    // ── thead ──
+    const thead = document.createElement("thead");
+    const headerRow = document.createElement("tr");
+    // Row label header cell
+    const thGroup = document.createElement("th");
+    thGroup.className = "kana-th-group";
+    thGroup.textContent = currentLang === "my" ? "တန်း" : "Row";
+    headerRow.appendChild(thGroup);
+    VOWEL_HEADERS.forEach(v => {
+      const th = document.createElement("th");
+      th.className = "kana-th-vowel";
+      th.innerHTML = `<span class="th-vowel-text">${v}</span>`;
+      headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
 
-    for (let r = 0; r < rows; r++) {
-      const row = document.createElement("tr");
+    // ── tbody ──
+    const tbody = document.createElement("tbody");
+    let itemIndex = 0;
 
-      for (let c = 0; c < rowSize; c++) {
-        const index = r * rowSize + c;
-        const [symbol, romaji, burmese] = items[index] || ["", "", ""];
+    ROW_GROUPS.forEach((group, gi) => {
+      const tr = document.createElement("tr");
+      tr.className = `kana-table-row kana-row-${gi % 2 === 0 ? "even" : "odd"}`;
+      tr.dataset.group = group.label;
 
-        const cell = document.createElement("td");
-        if (symbol) {
-          cell.innerHTML = `
-            <span class="kana">${symbol}</span>
-            <span class="romaji">${romaji}</span>
-            ${burmese && currentLang === "my" ? `<span class="burmese-spelling" style="display:block; margin-top:2px;">${burmese}</span>` : ""}
-          `;
-          cell.dataset.symbol = symbol;
-          cell.dataset.romaji = romaji;
-          if (burmese) cell.dataset.burmese = burmese;
-          cell.addEventListener("click", () => {
-            setHero(symbol, romaji);
-            speak(symbol);
-          });
+      // Row label cell
+      const tdLabel = document.createElement("td");
+      tdLabel.className = "kana-row-label";
+      tdLabel.style.setProperty("--row-color", group.color);
+      const labelText = currentLang === "my" ? group.my : group.en;
+      tdLabel.innerHTML = `<span class="row-label-text">${labelText}</span>`;
+      tr.appendChild(tdLabel);
+
+      // Data cells
+      for (let c = 0; c < 5; c++) {
+        const td = document.createElement("td");
+        td.className = "kana-table-cell";
+
+        if (c < group.count) {
+          const entry = items[itemIndex] || ["", "", ""];
+          const [symbol, romaji, burmese] = entry;
+          itemIndex++;
+
+          if (symbol) {
+            td.dataset.symbol = symbol;
+            td.dataset.romaji = romaji;
+            if (burmese) td.dataset.burmese = burmese;
+            td.innerHTML = `
+              <span class="kt-symbol">${symbol}</span>
+              <span class="kt-romaji">${romaji}</span>
+              ${burmese ? `<span class="kt-burmese">${burmese}</span>` : ""}
+            `;
+            td.classList.add("kt-clickable");
+            td.addEventListener("click", () => {
+              setHero(symbol, romaji);
+              speak(symbol);
+              td.classList.add("kt-active");
+              setTimeout(() => td.classList.remove("kt-active"), 600);
+            });
+          } else {
+            td.classList.add("kt-empty");
+            td.innerHTML = "<span class='kt-dash'>—</span>";
+          }
+        } else {
+          // structural blank for short rows (y, w, n rows)
+          td.classList.add("kt-empty");
+          td.innerHTML = "<span class='kt-dash'>—</span>";
         }
-        row.appendChild(cell);
+
+        tr.appendChild(td);
       }
 
-      table.appendChild(row);
-    }
+      tbody.appendChild(tr);
+    });
 
-    return table;
+    table.appendChild(tbody);
+    wrapper.appendChild(table);
+
+    // ── Legend ──
+    const legend = document.createElement("div");
+    legend.className = "kana-table-legend";
+    legend.innerHTML = `
+      <span class="ktl-item"><span class="ktl-dot" style="background:#6366f1"></span>${currentLang === "my" ? "သရ" : "Vowel row"}</span>
+      <span class="ktl-item"><span class="ktl-dot" style="background:#0ea5e9"></span>${currentLang === "my" ? "ဗျည်း" : "Consonant rows"}</span>
+      <span class="ktl-item"><span class="ktl-dot" style="background:#8b5cf6"></span>${currentLang === "my" ? "ချပ်တိုတန်း" : "Short rows"}</span>
+      <span class="ktl-item"><span class="ktl-dot" style="background:#10b981"></span>${currentLang === "my" ? "နနောက်" : "Nasal ん/ン"}</span>
+      <span class="ktl-tip"><i class="bi bi-volume-up"></i> ${currentLang === "my" ? "ကိုနှိပ်၍ အသံနားထောင်ပါ" : "Click any cell to hear pronunciation"}</span>
+    `;
+    wrapper.appendChild(legend);
+
+    return wrapper;
   };
+
 
   const toggleChartView = () => {
     const mainChartEl = document.getElementById("mainChart");
