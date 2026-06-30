@@ -532,6 +532,8 @@ const teacherTips = [
   },
 ];
 
+window.kanaData = kanaData;
+
 const KanaApp = (() => {
   let currentScript = "hiragana";
   let currentLang = localStorage.getItem("lang") || "en";
@@ -787,6 +789,8 @@ const KanaApp = (() => {
   let typingItems = [];
   let currentTypingKana = null;
   let lastStudyDate = localStorage.getItem("lastStudyDate") || new Date().toDateString();
+  let gamification = JSON.parse(localStorage.getItem("gamification") || "{\"xp\":0,\"level\":1,\"badges\":[]}");
+  let srsData = JSON.parse(localStorage.getItem("srsData") || "{}");
 
   const createKanaCard = (symbol, romaji, burmese) => {
     const card = document.createElement("button");
@@ -1017,14 +1021,17 @@ const KanaApp = (() => {
     utterance.onstart = () => {
       const audioWave = document.getElementById("audioWave");
       if (audioWave) audioWave.classList.add("playing");
+      document.querySelectorAll(".builder-char-tile").forEach(tile => tile.classList.add("speaking"));
     };
     utterance.onend = () => {
       const audioWave = document.getElementById("audioWave");
       if (audioWave) audioWave.classList.remove("playing");
+      document.querySelectorAll(".builder-char-tile").forEach(tile => tile.classList.remove("speaking"));
     };
     utterance.onerror = () => {
       const audioWave = document.getElementById("audioWave");
       if (audioWave) audioWave.classList.remove("playing");
+      document.querySelectorAll(".builder-char-tile").forEach(tile => tile.classList.remove("speaking"));
     };
 
     if (voices.length === 0) {
@@ -1173,11 +1180,22 @@ const KanaApp = (() => {
 
   const startFlashcards = () => {
     const data = kanaData[currentScript];
+    const now = Date.now();
     flashcardItems = data.main
       .filter(([s]) => s)
-      .map(([s, r, b]) => ({ symbol: s, romaji: r, burmese: b }));
+      .map(([s, r, b]) => ({ symbol: s, romaji: r, burmese: b }))
+      .filter(item => {
+        const itemSrs = srsData[item.symbol];
+        if (!itemSrs || !itemSrs.nextReview) return true;
+        return itemSrs.nextReview <= now;
+      });
 
-    if (flashcardItems.length === 0) return;
+    flashcardItems.sort(() => Math.random() - 0.5);
+
+    if (flashcardItems.length === 0) {
+      alert(currentLang === "en" ? "You have no cards due right now. Great job!" : "ယခု ပြန်လည်လေ့လာရန် ကတ်မရှိပါ။ အလွန်ကောင်းမွန်ပါတယ်!");
+      return;
+    }
 
     flashcardIndex = 0;
     isFlipped = false;
@@ -1195,28 +1213,52 @@ const KanaApp = (() => {
       ${card.burmese && currentLang === "my" ? `<div style="font-size: 18px; margin-top: 8px; font-family: 'Noto Sans Myanmar', sans-serif; opacity: 0.9;">${card.burmese}</div>` : ""}
       <div style="font-size: 14px; opacity: 0.8; margin-top: 12px;">${t.tapToFlip}</div>
     `;
-    elements.cardProgress.textContent = `${flashcardIndex + 1}/${flashcardItems.length}`;
+    const cardProgress = document.getElementById("cardProgress");
+    if (cardProgress) cardProgress.textContent = `${flashcardIndex + 1}/${flashcardItems.length}`;
 
     elements.flashcard.classList.remove("flipped");
     isFlipped = false;
+
+    const preControls = document.getElementById("flashcardPreFlipControls");
+    const postControls = document.getElementById("flashcardPostFlipControls");
+    if (preControls) preControls.style.display = "flex";
+    if (postControls) postControls.style.display = "none";
   };
 
   const toggleFlip = () => {
-    isFlipped ? elements.flashcard.classList.remove("flipped") : elements.flashcard.classList.add("flipped");
-    isFlipped = !isFlipped;
+    isFlipped = true;
+    elements.flashcard.classList.add("flipped");
+    
+    const preControls = document.getElementById("flashcardPreFlipControls");
+    const postControls = document.getElementById("flashcardPostFlipControls");
+    if (preControls) preControls.style.display = "none";
+    if (postControls) postControls.style.display = "flex";
   };
 
-  const nextFlashcard = () => {
+  const handleSRS = (correct) => {
+    const card = flashcardItems[flashcardIndex];
+    let cardSrs = srsData[card.symbol] || { level: 0, nextReview: 0 };
+    
+    if (correct) {
+      cardSrs.level += 1;
+      const intervals = [4 * 3600000, 12 * 3600000, 24 * 3600000, 72 * 3600000, 168 * 3600000];
+      const delay = intervals[Math.min(cardSrs.level - 1, intervals.length - 1)];
+      cardSrs.nextReview = Date.now() + delay;
+      awardXP(2);
+    } else {
+      cardSrs.level = 0;
+      cardSrs.nextReview = Date.now() + 60000;
+    }
+    
+    srsData[card.symbol] = cardSrs;
+    localStorage.setItem("srsData", JSON.stringify(srsData));
+    
     if (flashcardIndex < flashcardItems.length - 1) {
       flashcardIndex++;
       showFlashcard();
-    }
-  };
-
-  const prevFlashcard = () => {
-    if (flashcardIndex > 0) {
-      flashcardIndex--;
-      showFlashcard();
+    } else {
+      alert(currentLang === "en" ? "Review session complete!" : "ပြန်လည်လေ့လာခြင်း ပြီးဆုံးပါပြီ!");
+      closeFlashcardModal();
     }
   };
 
@@ -1261,11 +1303,33 @@ const KanaApp = (() => {
     drawingContext.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue("--text").trim() || "#0f172a";
   };
 
+  const fetchAndAnimateKanjiVG = async (char) => {
+    const container = document.getElementById("svgStrokeContainer");
+    if (!container) return;
+    
+    // Fallback to text while loading
+    container.innerHTML = `<span style="font-size: 80px; font-weight: 900;">${char}</span>`;
+    
+    try {
+      const hex = char.charCodeAt(0).toString(16).padStart(5, '0');
+      const url = `https://raw.githubusercontent.com/KanjiVG/kanjivg/master/kanji/${hex}.svg`;
+      
+      const response = await fetch(url);
+      if (response.ok) {
+        const svgData = await response.text();
+        container.innerHTML = svgData;
+      }
+    } catch (err) {
+      console.warn("Failed to fetch KanjiVG SVG for " + char, err);
+    }
+  };
+
   const selectRandomKana = () => {
     const data = kanaData[currentScript];
     const kanaList = data.main.filter(([s]) => s).map(([s, r]) => ({ symbol: s, romaji: r }));
     currentDrawingKana = kanaList[Math.floor(Math.random() * kanaList.length)];
     elements.drawingTarget.textContent = currentDrawingKana.symbol;
+    fetchAndAnimateKanjiVG(currentDrawingKana.symbol);
   };
 
   const clearDrawingCanvas = () => {
@@ -1319,6 +1383,7 @@ const KanaApp = (() => {
     elements.drawingFeedback.classList.remove("hidden");
 
     learned[currentDrawingKana.symbol] = true;
+    awardXP(20);
     saveProgress();
   };
 
@@ -1440,6 +1505,7 @@ const KanaApp = (() => {
       learned[currentTypingKana.symbol] = true;
       typingFeedback.innerHTML = t.typingCorrect;
       typingFeedback.className = "typing-feedback correct";
+      awardXP(10);
     } else {
       typingFeedback.innerHTML = t.typingIncorrect.replace("{answer}", correctAnswer);
       typingFeedback.className = "typing-feedback incorrect";
@@ -1486,7 +1552,24 @@ const KanaApp = (() => {
     document.getElementById("statKatakana").textContent = `${katakanaLearned}/${katakanaTotal}`;
 
     const today = new Date().toDateString();
-    const streak = lastStudyDate === today ? (parseInt(localStorage.getItem("streak") || "1") + 1) : 1;
+    const savedStreak = parseInt(localStorage.getItem("streak") || "1");
+    const lastDate = localStorage.getItem("lastStreakDate") || "";
+    let streak = 1;
+    if (lastDate === today) {
+      streak = savedStreak; // same day, keep streak
+    } else {
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      if (lastDate === yesterday.toDateString()) {
+        streak = savedStreak + 1; // consecutive day, increment
+        localStorage.setItem("streak", streak);
+        localStorage.setItem("lastStreakDate", today);
+      } else {
+        streak = 1; // streak broken
+        localStorage.setItem("streak", 1);
+        localStorage.setItem("lastStreakDate", today);
+      }
+    }
     const t = translations[currentLang];
     const daysLabel = currentLang === "en" ? (streak > 1 ? t.daysPlural : t.days) : t.days;
     document.getElementById("statStreak").textContent = `${streak} ${daysLabel}`;
@@ -1497,6 +1580,26 @@ const KanaApp = (() => {
       favList.innerHTML = `<p>${t.difficultKana}</p>${favSymbols.map(s => `<span class="favorite-item" onclick="this.remove()">${s}</span>`).join("")}`;
     } else {
       favList.innerHTML = `<p>${t.noFavorites}</p>`;
+    }
+
+    const badgesContainer = document.getElementById("badgesContainer");
+    if (badgesContainer) {
+      const allBadges = [
+        { id: "beginner", icon: "bi-star-fill", color: "bronze", title: currentLang === "en" ? "Beginner" : "စတင်သူ", desc: "100 XP" },
+        { id: "intermediate", icon: "bi-award-fill", color: "silver", title: currentLang === "en" ? "Intermediate" : "အလယ်အလတ်", desc: "500 XP" },
+        { id: "master", icon: "bi-trophy-fill", color: "gold", title: currentLang === "en" ? "Master" : "ဆရာ", desc: "2000 XP" },
+        { id: "level10", icon: "bi-gem", color: "gold", title: currentLang === "en" ? "Level 10" : "အဆင့် ၁၀", desc: "Reach Lv. 10" }
+      ];
+
+      badgesContainer.innerHTML = allBadges.map(b => {
+        const isUnlocked = gamification.badges.includes(b.id);
+        return `
+          <div class="badge-item ${isUnlocked ? b.color : 'locked'}" title="${b.desc}">
+            <i class="bi ${isUnlocked ? b.icon : 'bi-lock-fill'}"></i>
+            <span>${b.title}</span>
+          </div>
+        `;
+      }).join("");
     }
   };
 
@@ -1510,6 +1613,226 @@ const KanaApp = (() => {
     if (confirm("Are you sure? This will clear all your progress.")) {
       localStorage.clear();
       location.reload();
+    }
+  };
+
+  const calculateLevel = (xp) => Math.floor(Math.sqrt(xp / 50)) + 1;
+  const calculateXPForNextLevel = (level) => Math.pow(level, 2) * 50;
+
+  const updateGamificationUI = () => {
+    const levelBadge = document.getElementById("levelBadge");
+    const xpFill = document.getElementById("xpFill");
+    const xpText = document.getElementById("xpText");
+    if (!levelBadge || !xpFill || !xpText) return;
+
+    const currentLevelXP = calculateXPForNextLevel(gamification.level - 1);
+    const nextLevelXP = calculateXPForNextLevel(gamification.level);
+    const xpIntoLevel = gamification.xp - currentLevelXP;
+    const xpRequiredForLevel = nextLevelXP - currentLevelXP;
+    const progressPercent = Math.min(100, Math.max(0, (xpIntoLevel / xpRequiredForLevel) * 100));
+
+    levelBadge.textContent = `Lv. ${gamification.level}`;
+    xpFill.style.width = `${progressPercent}%`;
+    xpText.textContent = `${gamification.xp} / ${nextLevelXP} XP`;
+  };
+
+  const checkBadges = () => {
+    const newBadges = [];
+    if (gamification.xp >= 100 && !gamification.badges.includes("beginner")) newBadges.push("beginner");
+    if (gamification.xp >= 500 && !gamification.badges.includes("intermediate")) newBadges.push("intermediate");
+    if (gamification.xp >= 2000 && !gamification.badges.includes("master")) newBadges.push("master");
+    if (gamification.level >= 10 && !gamification.badges.includes("level10")) newBadges.push("level10");
+    
+    if (newBadges.length > 0) {
+      gamification.badges.push(...newBadges);
+      const congrats = currentLang === "en" ? "You earned a new badge!" : "တံဆိပ်အသစ်တစ်ခု ရရှိပါသည်!";
+      alert(`${congrats} (${newBadges.join(", ")})`);
+    }
+  };
+
+  const awardXP = (amount) => {
+    gamification.xp += amount;
+    const newLevel = calculateLevel(gamification.xp);
+    if (newLevel > gamification.level) {
+      gamification.level = newLevel;
+      showLevelUpModal(newLevel);
+    }
+    checkBadges();
+    localStorage.setItem("gamification", JSON.stringify(gamification));
+    updateGamificationUI();
+    updateDailyChallengeProgress();
+  };
+
+  // ========== CONFETTI ==========
+  const launchConfetti = () => {
+    const canvas = document.getElementById("confettiCanvas");
+    if (!canvas) return;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const ctx = canvas.getContext("2d");
+    const pieces = Array.from({ length: 120 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      r: Math.random() * 8 + 4,
+      d: Math.random() * 100,
+      color: ['#f59e0b','#ef4444','#8b5cf6','#3b82f6','#10b981','#ec4899'][Math.floor(Math.random()*6)],
+      tilt: Math.random() * 10 - 10,
+      tiltSpeed: Math.random() * 0.1 + 0.05,
+      speed: Math.random() * 3 + 2,
+    }));
+    let angle = 0;
+    let frame = 0;
+    const MAX_FRAMES = 180;
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      angle += 0.01;
+      pieces.forEach(p => {
+        p.tilt += p.tiltSpeed;
+        p.y += p.speed;
+        p.x += Math.sin(angle);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = Math.max(0, 1 - frame / MAX_FRAMES);
+        ctx.beginPath();
+        ctx.ellipse(p.x, p.y, p.r / 2, p.r, p.tilt, 0, 2 * Math.PI);
+        ctx.fill();
+      });
+      ctx.globalAlpha = 1;
+      frame++;
+      if (frame < MAX_FRAMES) requestAnimationFrame(draw);
+      else ctx.clearRect(0, 0, canvas.width, canvas.height);
+    };
+    draw();
+  };
+
+  // ========== LEVEL-UP MODAL ==========
+  const showLevelUpModal = (newLevel) => {
+    const modal = document.getElementById("levelUpModal");
+    const badge = document.getElementById("levelUpBadge");
+    const title = document.getElementById("levelUpTitle");
+    const msg = document.getElementById("levelUpMsg");
+    if (!modal) return;
+    if (badge) badge.textContent = `Lv. ${newLevel}`;
+    if (title) title.textContent = currentLang === "en" ? "Level Up!" : "အဆင့်တက်သွားပါပြီ!";
+    if (msg) msg.textContent = currentLang === "en" ? `You reached Level ${newLevel}! Keep going!` : `အဆင့် ${newLevel} ရောက်ပါပြီ! ဆက်ကြိုးစားပါ!`;
+    modal.classList.remove("hidden");
+    launchConfetti();
+    const closeBtn = document.getElementById("levelUpClose");
+    const close = () => { modal.classList.add("hidden"); };
+    if (closeBtn) { closeBtn.onclick = close; }
+    modal.onclick = (e) => { if (e.target === modal) close(); };
+  };
+
+  // ========== DAILY CHALLENGE ==========
+  const DAILY_GOALS = [
+    { id: "flip5",   en: "Flip 5 flashcards",   my: "ကတ် ၅ ချပ် လှန်ကြည့်ပါ",  target: 5,  xp: 10 },
+    { id: "quiz3",   en: "Answer 3 quiz questions", my: "ဉာဏ်စမ်း ၃ ခု ဖြေပါ", target: 3,  xp: 15 },
+    { id: "draw1",   en: "Complete 1 drawing",   my: "ပုံ ၁ ခု ဆွဲပြပါ",       target: 1,  xp: 20 },
+  ];
+
+  const getDailyChallengeState = () => {
+    const today = new Date().toDateString();
+    const saved = JSON.parse(localStorage.getItem("dailyChallenge") || "null");
+    if (!saved || saved.date !== today) {
+      const fresh = { date: today, progress: {}, bonusClaimed: false };
+      DAILY_GOALS.forEach(g => { fresh.progress[g.id] = 0; });
+      localStorage.setItem("dailyChallenge", JSON.stringify(fresh));
+      return fresh;
+    }
+    return saved;
+  };
+
+  const saveDailyChallengeState = (state) => {
+    localStorage.setItem("dailyChallenge", JSON.stringify(state));
+  };
+
+  const renderDailyChallenge = () => {
+    const state = getDailyChallengeState();
+    const goalsEl = document.getElementById("dcGoals");
+    const fillEl = document.getElementById("dcProgressFill");
+    const bonusEl = document.getElementById("dcBonusXP");
+    const titleEl = document.getElementById("dcTitle");
+    const subtitleEl = document.getElementById("dcSubtitle");
+    if (!goalsEl) return;
+    if (titleEl) titleEl.textContent = currentLang === "en" ? "Daily Challenge" : "နေ့စဉ်စိန်ခေါ်မှု";
+    if (subtitleEl) subtitleEl.textContent = currentLang === "en" ? "Complete today's goals to earn bonus XP" : "ပိုဆုကြေးငွေ ရရှိရန် ယနေ့ပန်းတိုင်များ ပြီးမြောက်ပါ";
+    let done = 0;
+    goalsEl.innerHTML = DAILY_GOALS.map(g => {
+      const cur = Math.min(g.target, state.progress[g.id] || 0);
+      const isDone = cur >= g.target;
+      if (isDone) done++;
+      const label = currentLang === "en" ? g.en : g.my;
+      return `
+        <div class="dc-goal-item ${isDone ? "done" : ""}">
+          <div class="dc-check">${isDone ? "✓" : ""}</div>
+          <span class="dc-goal-text">${label} (${cur}/${g.target})</span>
+          <span class="dc-goal-xp">+${g.xp} XP</span>
+        </div>`;
+    }).join("");
+    const pct = (done / DAILY_GOALS.length) * 100;
+    if (fillEl) fillEl.style.width = `${pct}%`;
+    if (bonusEl) {
+      bonusEl.textContent = state.bonusClaimed ? (currentLang === "en" ? "✓ Claimed!" : "✓ ရပြီး!") : "+50 XP";
+      bonusEl.classList.toggle("claimed", state.bonusClaimed);
+    }
+  };
+
+  const updateDailyChallengeProgress = () => renderDailyChallenge();
+
+  window.recordDailyGoal = (goalId, amount = 1) => {
+    const state = getDailyChallengeState();
+    if (!state.progress[goalId] && state.progress[goalId] !== 0) state.progress[goalId] = 0;
+    state.progress[goalId] += amount;
+    const allDone = DAILY_GOALS.every(g => (state.progress[g.id] || 0) >= g.target);
+    if (allDone && !state.bonusClaimed) {
+      state.bonusClaimed = true;
+      gamification.xp += 50;
+      localStorage.setItem("gamification", JSON.stringify(gamification));
+      updateGamificationUI();
+      launchConfetti();
+    }
+    saveDailyChallengeState(state);
+    renderDailyChallenge();
+  };
+
+  // ========== MASTERY HEATMAP ==========
+  let heatmapActive = false;
+
+  const applyHeatmap = () => {
+    const cards = document.querySelectorAll(".kana-card");
+    cards.forEach(card => {
+      card.classList.remove("heatmap-mastered", "heatmap-learning", "heatmap-new");
+    });
+    if (!heatmapActive) {
+      const legend = document.getElementById("heatmapLegend");
+      if (legend) legend.remove();
+      return;
+    }
+    cards.forEach(card => {
+      const symbol = card.dataset.symbol || card.querySelector(".kana-char")?.textContent?.trim();
+      if (!symbol) return;
+      const sr = srsData[symbol];
+      if (!sr) {
+        card.classList.add("heatmap-new");
+      } else if (sr.level >= 3) {
+        card.classList.add("heatmap-mastered");
+      } else {
+        card.classList.add("heatmap-learning");
+      }
+    });
+    // Insert legend below the main chart if not already there
+    let legend = document.getElementById("heatmapLegend");
+    if (!legend) {
+      const mainChart = document.getElementById("mainChart");
+      if (mainChart) {
+        legend = document.createElement("div");
+        legend.id = "heatmapLegend";
+        legend.className = "heatmap-legend";
+        legend.innerHTML = `
+          <span><div class="heatmap-dot mastered"></div> Mastered (3+ reviews)</span>
+          <span><div class="heatmap-dot learning"></div> Learning (1-2 reviews)</span>
+          <span><div class="heatmap-dot new"></div> New (not yet reviewed)</span>`;
+        mainChart.after(legend);
+      }
     }
   };
 
@@ -1667,6 +1990,18 @@ const KanaApp = (() => {
     if (elements.builderBurmese) {
       elements.builderBurmese.textContent = builtWord.map(w => w.burmese || "").filter(Boolean).join("");
     }
+
+    // Update quick-link hrefs
+    const word = builtWord.map(w => w.symbol).join("");
+    const encoded = encodeURIComponent(word);
+    const quickLinks = document.getElementById("builderQuickLinks");
+    const linkGoogle = document.getElementById("linkGoogleSearch");
+    const linkTranslate = document.getElementById("linkGoogleTranslate");
+    const linkJisho = document.getElementById("linkJisho");
+    if (quickLinks) quickLinks.style.display = word ? "flex" : "none";
+    if (linkGoogle) linkGoogle.href = `https://www.google.com/search?q=${encoded}`;
+    if (linkTranslate) linkTranslate.href = `https://translate.google.com/?sl=ja&tl=en&text=${encoded}&op=translate`;
+    if (linkJisho) linkJisho.href = `https://jisho.org/search/${encoded}`;
   };
 
   const speakBuilderWord = () => {
@@ -1703,9 +2038,15 @@ const KanaApp = (() => {
     customWords.unshift(newWordItem);
     localStorage.setItem("customWords", JSON.stringify(customWords));
     
-    alert(t.builderSaveSuccess);
-    clearBuilderWord();
-    renderCharts();
+    awardXP(15);
+    
+    document.querySelectorAll(".builder-char-tile").forEach(tile => tile.classList.add("saved"));
+    setTimeout(() => {
+      document.querySelectorAll(".builder-char-tile").forEach(tile => tile.classList.remove("saved"));
+      alert(t.builderSaveSuccess);
+      clearBuilderWord();
+      renderCharts();
+    }, 500);
   };
 
   const clearBuilderWord = () => {
@@ -1786,6 +2127,8 @@ const KanaApp = (() => {
   const initPanelCollapse = () => {
     const panel = document.getElementById("wordBuilderSection");
     const collapseBtn = document.getElementById("collapseBuilderBtn");
+    const fullscreenBtn = document.getElementById("fullscreenBuilderBtn");
+    const backdrop = document.getElementById("builderFsBackdrop");
     if (!panel || !collapseBtn) return;
 
     collapseBtn.addEventListener("click", () => {
@@ -1800,6 +2143,23 @@ const KanaApp = (() => {
       panel.classList.add("collapsed");
       collapseBtn.innerHTML = '<i class="bi bi-chevron-up"></i>';
     }
+
+    // Fullscreen toggle
+    const toggleFullscreen = () => {
+      const isFs = panel.classList.toggle("fullscreen");
+      if (fullscreenBtn) {
+        fullscreenBtn.innerHTML = isFs
+          ? '<i class="bi bi-fullscreen-exit"></i>'
+          : '<i class="bi bi-fullscreen"></i>';
+        fullscreenBtn.title = isFs ? "Exit fullscreen" : "Fullscreen";
+      }
+      if (backdrop) backdrop.classList.toggle("active", isFs);
+      // Ensure not collapsed in fullscreen
+      if (isFs) panel.classList.remove("collapsed");
+    };
+
+    if (fullscreenBtn) fullscreenBtn.addEventListener("click", toggleFullscreen);
+    if (backdrop) backdrop.addEventListener("click", toggleFullscreen);
   };
 
   const handleSearch = () => {
@@ -1877,6 +2237,7 @@ const KanaApp = (() => {
     button.classList.add("active");
     button.setAttribute("aria-selected", "true");
     currentScript = button.dataset.script;
+    window.currentScript = currentScript;
 
     isTableView = false;
     const mainChartEl = document.getElementById("mainChart");
@@ -1894,6 +2255,8 @@ const KanaApp = (() => {
   };
 
   const init = () => {
+    window.currentScript = currentScript;
+    window.awardXP = awardXP;
     initDarkMode();
     loadProgress();
 
@@ -1911,73 +2274,75 @@ const KanaApp = (() => {
       });
     });
 
-    elements.searchInput.addEventListener("input", handleSearch);
+    elements.searchInput?.addEventListener("input", handleSearch);
     elements.voiceSearchBtn?.addEventListener("click", toggleVoiceSearch);
 
-    elements.clearSearch.addEventListener("click", () => {
+    elements.clearSearch?.addEventListener("click", () => {
       elements.searchInput.value = "";
       cachedQuery = "";
       renderCharts();
       elements.searchInput.focus();
     });
 
-    elements.nextTip.addEventListener("click", () => {
+    elements.nextTip?.addEventListener("click", () => {
       tipIndex = (tipIndex + 1) % teacherTips.length;
       renderTip();
     });
 
-    elements.darkModeToggle.addEventListener("click", toggleDarkMode);
+    elements.darkModeToggle?.addEventListener("click", toggleDarkMode);
 
-    elements.quizToggle.addEventListener("click", startQuiz);
-    elements.closeQuiz.addEventListener("click", closeQuizModal);
-    elements.quizModal.addEventListener("click", (e) => {
+    elements.quizToggle?.addEventListener("click", startQuiz);
+    elements.closeQuiz?.addEventListener("click", closeQuizModal);
+    elements.quizModal?.addEventListener("click", (e) => {
       if (e.target === elements.quizModal) closeQuizModal();
     });
 
-    elements.flashcardToggle.addEventListener("click", startFlashcards);
-    elements.closeFlashcard.addEventListener("click", closeFlashcardModal);
-    elements.flashcardModal.addEventListener("click", (e) => {
+    elements.flashcardToggle?.addEventListener("click", startFlashcards);
+    elements.closeFlashcard?.addEventListener("click", closeFlashcardModal);
+    elements.flashcardModal?.addEventListener("click", (e) => {
       if (e.target === elements.flashcardModal) closeFlashcardModal();
     });
-    elements.flashcard.addEventListener("click", toggleFlip);
-    elements.flashcard.addEventListener("keydown", (e) => {
+    elements.flashcard?.addEventListener("click", toggleFlip);
+    elements.flashcard?.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
         toggleFlip();
       }
     });
-    elements.nextCard.addEventListener("click", nextFlashcard);
-    elements.prevCard.addEventListener("click", prevFlashcard);
 
-    elements.speedControl.addEventListener("click", toggleSpeedControl);
-    elements.speedSlider.addEventListener("input", (e) => updateSpeed(e.target.value));
 
-    elements.drawingToggle.addEventListener("click", startDrawing);
-    elements.closeDrawing.addEventListener("click", closeDrawingModal);
-    elements.drawingModal.addEventListener("click", (e) => {
+    elements.speedControl?.addEventListener("click", toggleSpeedControl);
+    elements.speedSlider?.addEventListener("input", (e) => updateSpeed(e.target.value));
+
+    elements.drawingToggle?.addEventListener("click", startDrawing);
+    elements.closeDrawing?.addEventListener("click", closeDrawingModal);
+    elements.drawingModal?.addEventListener("click", (e) => {
       if (e.target === elements.drawingModal) closeDrawingModal();
     });
 
-    elements.drawingCanvas.addEventListener("mousedown", startCanvasDraw);
-    elements.drawingCanvas.addEventListener("mousemove", drawOnCanvas);
-    elements.drawingCanvas.addEventListener("mouseup", endCanvasDraw);
-    elements.drawingCanvas.addEventListener("mouseout", endCanvasDraw);
-
-    elements.drawingCanvas.addEventListener("touchstart", (e) => {
+    elements.drawingCanvas?.addEventListener("mousedown", startCanvasDraw);
+    elements.drawingCanvas?.addEventListener("mousemove", drawOnCanvas);
+    elements.drawingCanvas?.addEventListener("mouseup", endCanvasDraw);
+    elements.drawingCanvas?.addEventListener("mouseout", endCanvasDraw);
+    
+    elements.drawingCanvas?.addEventListener("touchstart", (e) => {
       e.preventDefault();
       startCanvasDraw(e);
-    });
-    elements.drawingCanvas.addEventListener("touchmove", (e) => {
+    }, { passive: false });
+    elements.drawingCanvas?.addEventListener("touchmove", (e) => {
       e.preventDefault();
       drawOnCanvas(e);
-    });
-    elements.drawingCanvas.addEventListener("touchend", endCanvasDraw);
+    }, { passive: false });
+    elements.drawingCanvas?.addEventListener("touchend", endCanvasDraw);
 
-    elements.clearCanvas.addEventListener("click", clearDrawingCanvas);
-    elements.submitDrawing.addEventListener("click", submitDrawing);
-    elements.newDrawing.addEventListener("click", () => {
+    elements.clearCanvas?.addEventListener("click", clearDrawingCanvas);
+    elements.submitDrawing?.addEventListener("click", submitDrawing);
+    elements.newDrawing?.addEventListener("click", () => {
       selectRandomKana();
       clearDrawingCanvas();
+    });
+    document.getElementById("replayStrokeBtn")?.addEventListener("click", () => {
+      if (currentDrawingKana) fetchAndAnimateKanjiVG(currentDrawingKana.symbol);
     });
 
     const chartViewToggle = document.getElementById("chartViewToggle");
@@ -1985,8 +2350,43 @@ const KanaApp = (() => {
       chartViewToggle.addEventListener("click", toggleChartView);
     }
 
+    // Heatmap toggle
+    const heatmapToggleBtn = document.getElementById("heatmapToggle");
+    if (heatmapToggleBtn) {
+      heatmapToggleBtn.addEventListener("click", () => {
+        heatmapActive = !heatmapActive;
+        heatmapToggleBtn.innerHTML = heatmapActive
+          ? '<i class="bi bi-fire-fill"></i> Heatmap On'
+          : '<i class="bi bi-fire"></i> Heatmap';
+        heatmapToggleBtn.style.background = heatmapActive ? "#10b981" : "";
+        heatmapToggleBtn.style.color = heatmapActive ? "white" : "";
+        heatmapToggleBtn.style.borderColor = heatmapActive ? "#10b981" : "";
+        applyHeatmap();
+      });
+    }
+
     document.getElementById("typingToggle")?.addEventListener("click", startTyping);
     document.getElementById("closeTyping")?.addEventListener("click", closeTypingModal);
+    
+    // Invader Game bindings
+    const invaderModal = document.getElementById("invaderModal");
+    const openInvaderModal = () => {
+      invaderModal.classList.remove("hidden");
+      invaderModal.setAttribute("aria-hidden", "false");
+    };
+    const closeInvaderModal = () => {
+      invaderModal.classList.add("hidden");
+      invaderModal.setAttribute("aria-hidden", "true");
+      if (window.typingInvader) {
+        window.typingInvader.isRunning = false;
+        if (window.typingInvader.animationFrameId) cancelAnimationFrame(window.typingInvader.animationFrameId);
+      }
+    };
+    document.getElementById("invaderToggle")?.addEventListener("click", openInvaderModal);
+    document.getElementById("closeInvader")?.addEventListener("click", closeInvaderModal);
+    invaderModal?.addEventListener("click", (e) => {
+      if (e.target === invaderModal) closeInvaderModal();
+    });
     document.getElementById("typingModal")?.addEventListener("click", (e) => {
       if (e.target === document.getElementById("typingModal")) closeTypingModal();
     });
@@ -2002,6 +2402,8 @@ const KanaApp = (() => {
     });
     document.getElementById("resetStats")?.addEventListener("click", resetProgress);
     document.getElementById("langToggle")?.addEventListener("click", toggleLanguage);
+    document.getElementById("srsMissed")?.addEventListener("click", () => handleSRS(false));
+    document.getElementById("srsGotIt")?.addEventListener("click", () => handleSRS(true));
 
     elements.speakBuilderBtn?.addEventListener("click", speakBuilderWord);
     elements.saveBuilderWordBtn?.addEventListener("click", saveBuilderWord);
@@ -2015,6 +2417,7 @@ const KanaApp = (() => {
     initPanelDraggable();
     initPanelCollapse();
     updateLanguageUI();
+    updateGamificationUI();
   };
 
   return { init };

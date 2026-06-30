@@ -11,6 +11,19 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body data-theme="light">
+    <div id="builderFsBackdrop" class="builder-fs-backdrop"></div>
+    <!-- Confetti canvas for celebrations -->
+    <canvas id="confettiCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;"></canvas>
+    <!-- Level-up celebration modal -->
+    <div id="levelUpModal" class="level-up-modal hidden" role="alertdialog" aria-labelledby="levelUpTitle">
+      <div class="level-up-card">
+        <div class="level-up-emoji">🎉</div>
+        <h2 id="levelUpTitle" class="level-up-title">Level Up!</h2>
+        <div id="levelUpBadge" class="level-up-badge">Lv. 2</div>
+        <p id="levelUpMsg" class="level-up-msg">You're making great progress!</p>
+        <button id="levelUpClose" class="level-up-btn">Awesome!</button>
+      </div>
+    </div>
     <main class="app" role="main" aria-label="Japanese Kana Learning Application">
       <section class="hero" aria-label="Application header and featured character">
         <div>
@@ -20,6 +33,13 @@
             Learn Hiragana, Katakana, pronunciation rules, complex sounds, and
             teacher tips in one clean white interface.
           </p>
+          <div class="level-container" aria-label="Experience points and level progress">
+            <div class="level-badge" id="levelBadge" title="Current Level">Lv. 1</div>
+            <div class="xp-bar" title="XP Progress">
+              <div class="xp-fill" id="xpFill" style="width: 0%"></div>
+            </div>
+            <div class="xp-text" id="xpText">0 / 100 XP</div>
+          </div>
         </div>
 
         <div class="hero-card" aria-live="polite" aria-label="Featured character display">
@@ -57,6 +77,7 @@
           <button id="flashcardToggle" aria-label="Flashcard mode" title="Flip to reveal"><i class="bi bi-credit-card"></i> Cards</button>
           <button id="drawingToggle" aria-label="Drawing practice" title="Practice drawing"><i class="bi bi-brush"></i> Draw</button>
           <button id="typingToggle" aria-label="Typing practice" title="Type romaji"><i class="bi bi-keyboard"></i> Type</button>
+          <button id="invaderToggle" aria-label="Play Typing Invader" title="Mini-game"><i class="bi bi-controller"></i> Game</button>
           <button id="statsToggle" aria-label="View statistics" title="Your progress"><i class="bi bi-graph-up"></i> Stats</button>
           <button id="speedControl" aria-label="Adjust speech speed" title="Speed control"><i class="bi bi-sliders"></i> Speed</button>
           <button id="langToggle" aria-label="Toggle language" title="Switch language"><i class="bi bi-translate"></i> EN</button>
@@ -92,11 +113,32 @@
         <button class="next-tip" id="nextTip" aria-label="Show next teacher tip">Next Tip</button>
       </section>
 
+      <!-- Daily Challenge Widget -->
+      <section class="daily-challenge-section" id="dailyChallengeSection" aria-label="Daily Challenge">
+        <div class="daily-challenge-card">
+          <div class="dc-header">
+            <span class="dc-icon">🎯</span>
+            <div class="dc-title-wrap">
+              <strong id="dcTitle" class="dc-title">Daily Challenge</strong>
+              <p id="dcSubtitle" class="dc-subtitle">Complete today's goals to earn bonus XP</p>
+            </div>
+            <div id="dcBonusXP" class="dc-bonus">+50 XP</div>
+          </div>
+          <div class="dc-goals" id="dcGoals"></div>
+          <div class="dc-progress-bar"><div id="dcProgressFill" class="dc-progress-fill" style="width:0%"></div></div>
+        </div>
+      </section>
+
       <section class="chart-section" aria-labelledby="mainChartTitle">
         <div class="section-head">
-          <h2 id="mainChartTitle">Main Chart</h2>
-          <p id="mainChartDesc">Basic Japanese sounds</p>
-          <button id="chartViewToggle" class="view-toggle" aria-label="Toggle between grid and table view"><i class="bi bi-list"></i> Table</button>
+          <div>
+            <h2 id="mainChartTitle">Main Chart</h2>
+            <p id="mainChartDesc">Basic Japanese sounds</p>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <button id="chartViewToggle" class="view-toggle" aria-label="Toggle between grid and table view"><i class="bi bi-list"></i> Table</button>
+            <button id="heatmapToggle" class="view-toggle" title="Toggle mastery heatmap" aria-label="Toggle mastery heatmap"><i class="bi bi-fire"></i> Heatmap</button>
+          </div>
         </div>
         <div id="mainChart" class="kana-grid" role="region" aria-label="Main kana character grid"></div>
         <div id="mainTable" class="kana-table hidden" role="region" aria-label="Main kana character table"></div>
@@ -129,7 +171,10 @@
       <div id="wordBuilderSection" class="word-builder-floating">
         <div class="builder-handle" id="builderHandle" title="Drag to move">
           <span id="wordBuilderTitle" class="handle-title">Word Builder</span>
-          <button id="collapseBuilderBtn" class="collapse-btn" title="Collapse/Expand"><i class="bi bi-chevron-down"></i></button>
+          <div class="handle-actions">
+            <button id="fullscreenBuilderBtn" class="collapse-btn" title="Fullscreen"><i class="bi bi-fullscreen"></i></button>
+            <button id="collapseBuilderBtn" class="collapse-btn" title="Collapse/Expand"><i class="bi bi-chevron-down"></i></button>
+          </div>
         </div>
         <div class="word-builder-content" id="wordBuilderContent">
           <p id="wordBuilderDesc" class="builder-desc">Click character cards to add them. Drag tiles to rearrange.</p>
@@ -146,6 +191,12 @@
             <button id="saveBuilderWordBtn" class="builder-btn save-btn" title="Save to Practice Words"><i class="bi bi-plus-circle-fill"></i> Save Word</button>
             <button id="clearBuilderBtn" class="builder-btn clear-btn" title="Clear word"><i class="bi bi-trash-fill"></i> Clear</button>
           </div>
+          <div class="builder-quick-links" id="builderQuickLinks" style="display:none;">
+            <span class="quick-links-label">Search:</span>
+            <a id="linkGoogleSearch" class="quick-link-btn" href="#" target="_blank" rel="noopener" title="Search on Google"><i class="bi bi-google"></i> Google</a>
+            <a id="linkGoogleTranslate" class="quick-link-btn" href="#" target="_blank" rel="noopener" title="Translate on Google Translate"><img src="https://translate.google.com/favicon.ico" width="14" height="14" alt="" style="vertical-align:middle;margin-right:4px;">Translate</a>
+            <a id="linkJisho" class="quick-link-btn" href="#" target="_blank" rel="noopener" title="Look up on Jisho (Japanese dictionary)">📖 Jisho</a>
+          </div>
         </div>
       </div>
 
@@ -158,9 +209,6 @@
       </section>
     </main>
 
-    <div id="quizModal" class="modal hidden" role="dialog" aria-labelledby="quizTitle" aria-hidden="true">
-      <div class="modal-content">
-        <div class="modal-header">
     <div id="quizModal" class="modal hidden" role="dialog" aria-labelledby="quizTitle" aria-hidden="true">
       <div class="modal-content">
         <div class="modal-header">
@@ -192,9 +240,13 @@
             </div>
           </div>
           <div class="flashcard-controls">
-            <button id="prevCard" aria-label="Previous card"><i class="bi bi-chevron-left"></i> Prev</button>
-            <span id="cardProgress">1/1</span>
-            <button id="nextCard" aria-label="Next card">Next <i class="bi bi-chevron-right"></i></button>
+            <div id="flashcardPreFlipControls" class="flashcard-controls-inner">
+               <span id="cardProgress">1/1</span>
+            </div>
+            <div id="flashcardPostFlipControls" class="flashcard-controls-inner hidden" style="display: none; width: 100%; gap: 12px; justify-content: space-between;">
+              <button id="srsMissed" class="srs-btn missed"><i class="bi bi-x-lg"></i> Missed it</button>
+              <button id="srsGotIt" class="srs-btn got-it"><i class="bi bi-check-lg"></i> Got it</button>
+            </div>
           </div>
         </div>
       </div>
@@ -209,8 +261,12 @@
         <div id="drawingContainer" class="drawing-container">
           <div class="drawing-prompt">
             <p>Draw this character:</p>
-            <div id="drawingTarget" class="drawing-target"></div>
-            <button id="newDrawing" aria-label="Next character"><i class="bi bi-arrow-clockwise"></i> New</button>
+            <div id="drawingTarget" class="drawing-target" style="display: none;"></div>
+            <div id="svgStrokeContainer" class="svg-stroke-container"></div>
+            <div style="display: flex; gap: 8px; margin-top: 12px;">
+              <button id="replayStrokeBtn" aria-label="Replay animation" class="secondary-btn"><i class="bi bi-play-circle"></i> Replay</button>
+              <button id="newDrawing" aria-label="Next character" class="secondary-btn"><i class="bi bi-arrow-clockwise"></i> New</button>
+            </div>
           </div>
           <div class="drawing-canvas-wrapper">
             <canvas id="drawingCanvas" width="400" height="400" aria-label="Drawing canvas for practice"></canvas>
@@ -272,12 +328,36 @@
             <div class="stat-value" id="statStreak">0 days</div>
           </div>
           <div id="favoritesList" class="favorites-list"></div>
+          <div class="badges-section" aria-label="Unlocked Badges">
+            <h3 id="badgesTitle">Badges</h3>
+            <div id="badgesContainer" class="badges-container"></div>
+          </div>
           <button id="resetStats" class="reset-btn"><i class="bi bi-arrow-counterclockwise"></i> Reset Progress</button>
         </div>
       </div>
     </div>
 
+    <div id="invaderModal" class="modal hidden" role="dialog" aria-labelledby="invaderTitle" aria-hidden="true">
+      <div class="modal-content modal-large" style="text-align: center;">
+        <div class="modal-header">
+          <h2 id="invaderTitle"><i class="bi bi-controller"></i> Typing Invader</h2>
+          <button id="closeInvader" aria-label="Close game" class="close-btn"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div class="invader-container" style="position: relative; background: var(--card); border: 2px solid var(--line); border-radius: 12px; overflow: hidden; margin-bottom: 16px;">
+          <div style="position: absolute; top: 10px; left: 16px; font-weight: 800; font-size: 18px;">Score: <span id="invaderScore">0</span></div>
+          <div style="position: absolute; top: 10px; right: 16px; font-size: 18px;" id="invaderLives"></div>
+          
+          <canvas id="invaderCanvas" width="800" height="400" style="display: block; width: 100%;"></canvas>
+          
+          <button id="startInvaderBtn" class="primary-btn" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 12px 24px; font-size: 18px; border-radius: 999px; border: none; background: var(--accent); color: white; cursor: pointer; font-weight: 800;"><i class="bi bi-play-fill"></i> Start Game</button>
+        </div>
+        
+        <input type="text" id="invaderInput" placeholder="Type romaji here to shoot..." autocomplete="off" style="width: 100%; padding: 16px; font-size: 18px; text-align: center; border-radius: 999px; border: 2px solid var(--line); display: none;">
+      </div>
+    </div>
+
     <script src="words.js"></script>
     <script src="script.js"></script>
+    <script src="invader.js"></script>
   </body>
 </html>
