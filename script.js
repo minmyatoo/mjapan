@@ -75,6 +75,47 @@ const translations = {
     builderSaveSuccess: "Word saved to Practice List!",
     builderSaveEmpty: "Please build a word first!",
     builderInputPlaceholder: "Type Romaji or Burmese phonetics here...",
+    dashboardTitle: "Mastery Dashboard",
+    overallProgress: "Overall Progress",
+    grammarBridgeTitle: "Grammar & Particle Bridge (MM ⇄ JP)",
+    grammarBridgeDesc: "Hacking Japanese vocabulary: identical word order (SOV) and particle-for-particle translation.",
+    gbParticlesTitle: "1. Particle Hack Shortcut",
+    gbColJpPart: "Japanese Particle",
+    gbColMmPart: "Myanmar Equivalent",
+    gbColFunc: "Function / Usage",
+    gbColEx: "Example",
+    gbFuncSubj: "Subject / Topic marker",
+    gbFuncObj: "Direct object marker",
+    gbFuncDest: "Destination / Time / Location",
+    gbFuncMeans: "Action location / Means / Tool",
+    gbFuncPoss: "Possession (of / 's)",
+    gbFuncRange: "From ... To (Range)",
+    gbSentencesTitle: "2. 1:1 Word Order Sentence Match",
+    gbSentencesIntro: "Since both languages are <strong>SOV (Subject-Object-Verb)</strong>, you can construct Japanese sentences by translating word-by-word from Myanmar!",
+    gbEx1Label: "Example 1: \"I eat rice.\"",
+    gbEx2Label: "Example 2: \"I go to school by bus.\"",
+    gbVerbTitle: "3. Japanese Verb Types & Conjugation Hack",
+    gbVerbIntro: "Japanese verbs have 3 main groups. Suffix conjugations map 1:1 to Myanmar verb suffixes!",
+    btnVerbG1: "Group 1 (Godan / -u)",
+    btnVerbG2: "Group 2 (Ichidan / -ru)",
+    btnVerbG3: "Group 3 (Irregular)",
+    gbVcForm: "Form",
+    gbVcSfx: "Japanese Suffix",
+    gbVcConj: "Conjugated Verb",
+    gbVcMm: "Myanmar Suffix Match",
+    tcRoot: "Japanese Verbs (動詞 - Doushi)",
+    tcB1: "Group 1 (Godan / -u)<br><small>Ends in ~u (e.g. 飲む Nomu)</small>",
+    tcB2: "Group 2 (Ichidan / -ru)<br><small>Ends in ~iru / ~eru (e.g. 食べる Taberu)</small>",
+    tcB3: "Group 3 (Irregular)<br><small>する (To Do) / くる (To Come)</small>",
+    tcL1_1: "Polite: 飲みます (-imasu)",
+    tcL1_2: "Negative: 飲みません (-imasen)",
+    tcL1_3: "Past: 飲みました (-imashita)",
+    tcL2_1: "Polite: 食べます (-masu)",
+    tcL2_2: "Negative: 食べません (-masen)",
+    tcL2_3: "Past: 食べました (-mashita)",
+    tcL3_1: "Polite: します / きます",
+    tcL3_2: "Negative: しません / きません",
+    tcL3_3: "Past: しました / きました",
   },
   my: {
     eyebrow: "ဂျပန်စာ ကနစနစ်",
@@ -152,6 +193,47 @@ const translations = {
     builderSaveSuccess: "စကားလုံးကို လေ့ကျင့်ရန်စာရင်းထဲသို့ သိမ်းဆည်းပြီးပါပြီ!",
     builderSaveEmpty: "ကျေးဇူးပြု၍ စကားလုံးအရင် တည်ဆောက်ပါ!",
     builderInputPlaceholder: "ရိုမာဂျိ (သို့) မြန်မာ အသံထွက် ရိုက်ထည့်ပါ...",
+    dashboardTitle: "ကျွမ်းကျင်မှု ဇယား",
+    overallProgress: "တိုးတက်မှု အားလုံး",
+    grammarBridgeTitle: "သဒ္ဒါနှင့် ဝိဘတ် ချိတ်ဆက်မှု (မြန်မာ ⇄ ဂျပန်)",
+    grammarBridgeDesc: "ဂျပန်စကားလုံးများကို လျင်မြန်စွာလေ့လာရန် ဖြတ်လမ်းနည်း- သဒ္ဒါဖွဲ့စည်းပုံ (SOV) တူညီပြီး တစ်လုံးချင်း တိုက်ရိုက်ပြန်ဆိုနိုင်ခြင်း။",
+    gbParticlesTitle: "၁။ ဝိဘတ်နှိုင်းယှဉ်ချက် ဖြတ်လမ်း",
+    gbColJpPart: "ဂျပန်ဝိဘတ်",
+    gbColMmPart: "မြန်မာဝိဘတ်",
+    gbColFunc: "လုပ်ဆောင်ချက် / အသုံးပြုပုံ",
+    gbColEx: "ဥပမာ",
+    gbFuncSubj: "ကတ္တား / အကြောင်းအရာပြဝိဘတ်",
+    gbFuncObj: "ကံပြဝိဘတ်",
+    gbFuncDest: "နေရာ / အချိန် / ဦးတည်ရာပြဝိဘတ်",
+    gbFuncMeans: "ပြုလုပ်ရာနေရာ / နည်းလမ်း / ကိရိယာပြဝိဘတ်",
+    gbFuncPoss: "ပိုင်ဆိုင်မှုပြဝိဘတ် (၏ / ရဲ့)",
+    gbFuncRange: "မှ ... အထိ (အတိုင်းအတာပြဝိဘတ်)",
+    gbSentencesTitle: "၂။ ၁:၁ စကားလုံးအစီအစဉ် နှိုင်းယှဉ်ချက်",
+    gbSentencesIntro: "ဘာသာစကားနှစ်ခုစလုံးသည် <strong>SOV (Subject-Object-Verb)</strong> ကတ္တား-ကံ-ကြိယာ ဖွဲ့စည်းပုံတူညီသောကြောင့် မြန်မာစာမှ ဂျပန်စာသို့ တစ်လုံးချင်း တိုက်ရိုက်ပြောင်းလဲ တည်ဆောက်နိုင်ပါသည်!",
+    gbEx1Label: "ဥပမာ ၁။ \"ကျွန်တော် ထမင်း စားသည်။\"",
+    gbEx2Label: "ဥပမာ ၂။ \"ကျွန်တော် ကျောင်းသို့ ဘတ်စ်ကားဖြင့် သွားသည်။\"",
+    gbVerbTitle: "၃။ ဂျပန်ကြိယာအမျိုးအစားနှင့် ဝိဘတ်ပြောင်းလဲပုံ ဖြတ်လမ်း",
+    gbVerbIntro: "ဂျပန်ကြိယာများတွင် အဓိကအုပ်စု ၃ စုရှိသည်။ ကြိယာနောက်ဆက်တွဲဝိဘတ်များသည် မြန်မာကြိယာနောက်ဆက်တွဲဝိဘတ်များနှင့် ၁:၁ တိုက်ရိုက်ကိုက်ညီမှုရှိသည်!",
+    btnVerbG1: "အုပ်စု ၁ (ဂိုဒန် / -u)",
+    btnVerbG2: "အုပ်စု ၂ (အိချိဒန် / -ru)",
+    btnVerbG3: "အုပ်စု ၃ (ပုံသေမရှိ / Irregular)",
+    gbVcForm: "ပုံစံ",
+    gbVcSfx: "ဂျပန်ဝိဘတ်နောက်ဆက်တွဲ",
+    gbVcConj: "ပြောင်းလဲထားသောကြိယာ",
+    gbVcMm: "မြန်မာဝိဘတ်နောက်ဆက်တွဲ နှိုင်းယှဉ်ချက်",
+    tcRoot: "ဂျပန်ကြိယာများ (動詞 - ဒိုးရှိ)",
+    tcB1: "အုပ်စု ၁ (ဂိုဒန် / -u)<br><small>~u ဖြင့်ဆုံးသည် (ဥပမာ- 飲む Nomu)</small>",
+    tcB2: "အုပ်စု ၂ (အိချိဒန် / -ru)<br><small>~iru / ~eru ဖြင့်ဆုံးသည် (ဥပမာ- 食べる Taberu)</small>",
+    tcB3: "အုပ်စု ၃ (ပုံသေမရှိ / Irregular)<br><small>する (ပြုလုပ်သည်) / くる (လာသည်)</small>",
+    tcL1_1: "ယဉ်ကျေး- 飲みます (သောက်ပါသည်)",
+    tcL1_2: "အငြင်း- 飲みません (မသောက်ပါ)",
+    tcL1_3: "အတိတ်- 飲みました (သောက်ခဲ့ပါသည်)",
+    tcL2_1: "ယဉ်ကျေး- 食べます (စားပါသည်)",
+    tcL2_2: "အငြင်း- 食べません (မစားပါ)",
+    tcL2_3: "အတိတ်- 食べました (စားခဲ့ပါသည်)",
+    tcL3_1: "ယဉ်ကျေး- します / きます",
+    tcL3_2: "အငြင်း- しません / きません",
+    tcL3_3: "အတိတ်- しました / きました",
   }
 };
 
@@ -649,6 +731,7 @@ const KanaApp = (() => {
   let flashcardItems = [];
   let isFlipped = false;
   let builtWord = [];
+  let audioVisualizerId = null;
 
   const elements = {
     mainChart: document.getElementById("mainChart"),
@@ -852,10 +935,105 @@ const KanaApp = (() => {
       elements.builderChars.classList.add("placeholder");
     }
 
+    // Update Mastery Dashboard strings
+    const dbTitle = document.getElementById("dbTitle");
+    const dbOverallProgress = document.getElementById("dbOverallProgress");
+    if (dbTitle) dbTitle.textContent = t.dashboardTitle;
+    if (dbOverallProgress) dbOverallProgress.textContent = t.overallProgress;
+
+    // Update Grammar Bridge strings
+    const grammarBridgeTitle = document.getElementById("grammarBridgeTitle");
+    const grammarBridgeDesc = document.getElementById("grammarBridgeDesc");
+    const gbParticlesTitle = document.getElementById("gbParticlesTitle");
+    const gbColJpPart = document.getElementById("gbColJpPart");
+    const gbColMmPart = document.getElementById("gbColMmPart");
+    const gbColFunc = document.getElementById("gbColFunc");
+    const gbColEx = document.getElementById("gbColEx");
+    const gbFuncSubj = document.getElementById("gbFuncSubj");
+    const gbFuncObj = document.getElementById("gbFuncObj");
+    const gbFuncDest = document.getElementById("gbFuncDest");
+    const gbFuncMeans = document.getElementById("gbFuncMeans");
+    const gbFuncPoss = document.getElementById("gbFuncPoss");
+    const gbFuncRange = document.getElementById("gbFuncRange");
+    const gbSentencesTitle = document.getElementById("gbSentencesTitle");
+    const gbSentencesIntro = document.getElementById("gbSentencesIntro");
+    const gbEx1Label = document.getElementById("gbEx1Label");
+    const gbEx2Label = document.getElementById("gbEx2Label");
+
+    if (grammarBridgeTitle) grammarBridgeTitle.textContent = t.grammarBridgeTitle;
+    if (grammarBridgeDesc) grammarBridgeDesc.textContent = t.grammarBridgeDesc;
+    if (gbParticlesTitle) gbParticlesTitle.textContent = t.gbParticlesTitle;
+    if (gbColJpPart) gbColJpPart.textContent = t.gbColJpPart;
+    if (gbColMmPart) gbColMmPart.textContent = t.gbColMmPart;
+    if (gbColFunc) gbColFunc.textContent = t.gbColFunc;
+    if (gbColEx) gbColEx.textContent = t.gbColEx;
+    if (gbFuncSubj) gbFuncSubj.textContent = t.gbFuncSubj;
+    if (gbFuncObj) gbFuncObj.textContent = t.gbFuncObj;
+    if (gbFuncDest) gbFuncDest.textContent = t.gbFuncDest;
+    if (gbFuncMeans) gbFuncMeans.textContent = t.gbFuncMeans;
+    if (gbFuncPoss) gbFuncPoss.textContent = t.gbFuncPoss;
+    if (gbFuncRange) gbFuncRange.textContent = t.gbFuncRange;
+    if (gbSentencesTitle) gbSentencesTitle.textContent = t.gbSentencesTitle;
+    if (gbSentencesIntro) gbSentencesIntro.innerHTML = t.gbSentencesIntro;
+    if (gbEx1Label) gbEx1Label.textContent = t.gbEx1Label;
+    if (gbEx2Label) gbEx2Label.textContent = t.gbEx2Label;
+
+    // Update Verb Hack strings
+    const gbVerbTitle = document.getElementById("gbVerbTitle");
+    const gbVerbIntro = document.getElementById("gbVerbIntro");
+    const btnVerbG1 = document.getElementById("btnVerbG1");
+    const btnVerbG2 = document.getElementById("btnVerbG2");
+    const btnVerbG3 = document.getElementById("btnVerbG3");
+    const gbVcForm = document.getElementById("gbVcForm");
+    const gbVcSfx = document.getElementById("gbVcSfx");
+    const gbVcConj = document.getElementById("gbVcConj");
+    const gbVcMm = document.getElementById("gbVcMm");
+
+    if (gbVerbTitle) gbVerbTitle.textContent = t.gbVerbTitle;
+    if (gbVerbIntro) gbVerbIntro.textContent = t.gbVerbIntro;
+    if (btnVerbG1) btnVerbG1.textContent = t.btnVerbG1;
+    if (btnVerbG2) btnVerbG2.textContent = t.btnVerbG2;
+    if (btnVerbG3) btnVerbG3.textContent = t.btnVerbG3;
+    if (gbVcForm) gbVcForm.textContent = t.gbVcForm;
+    if (gbVcSfx) gbVcSfx.textContent = t.gbVcSfx;
+    if (gbVcConj) gbVcConj.textContent = t.gbVcConj;
+    if (gbVcMm) gbVcMm.textContent = t.gbVcMm;
+
+    // Update Tree Chart strings
+    const tcRoot = document.getElementById("tcRoot");
+    const tcB1 = document.getElementById("tcB1");
+    const tcB2 = document.getElementById("tcB2");
+    const tcB3 = document.getElementById("tcB3");
+    const tcL1_1 = document.getElementById("tcL1_1");
+    const tcL1_2 = document.getElementById("tcL1_2");
+    const tcL1_3 = document.getElementById("tcL1_3");
+    const tcL2_1 = document.getElementById("tcL2_1");
+    const tcL2_2 = document.getElementById("tcL2_2");
+    const tcL2_3 = document.getElementById("tcL2_3");
+    const tcL3_1 = document.getElementById("tcL3_1");
+    const tcL3_2 = document.getElementById("tcL3_2");
+    const tcL3_3 = document.getElementById("tcL3_3");
+
+    if (tcRoot) tcRoot.innerHTML = t.tcRoot;
+    if (tcB1) tcB1.innerHTML = t.tcB1;
+    if (tcB2) tcB2.innerHTML = t.tcB2;
+    if (tcB3) tcB3.innerHTML = t.tcB3;
+    if (tcL1_1) tcL1_1.innerHTML = t.tcL1_1;
+    if (tcL1_2) tcL1_2.innerHTML = t.tcL1_2;
+    if (tcL1_3) tcL1_3.innerHTML = t.tcL1_3;
+    if (tcL2_1) tcL2_1.innerHTML = t.tcL2_1;
+    if (tcL2_2) tcL2_2.innerHTML = t.tcL2_2;
+    if (tcL2_3) tcL2_3.innerHTML = t.tcL2_3;
+    if (tcL3_1) tcL3_1.innerHTML = t.tcL3_1;
+    if (tcL3_2) tcL3_2.innerHTML = t.tcL3_2;
+    if (tcL3_3) tcL3_3.innerHTML = t.tcL3_3;
+
     // Re-render
     updateProgress();
     renderTip();
     renderCharts();
+    if (typeof renderPqQuestion === "function") renderPqQuestion();
+    if (typeof renderVerbConjugations === "function") renderVerbConjugations();
   };
 
   const toggleLanguage = () => {
@@ -894,6 +1072,108 @@ const KanaApp = (() => {
   let gamification = JSON.parse(localStorage.getItem("gamification") || "{\"xp\":0,\"level\":1,\"badges\":[]}");
   let srsData = JSON.parse(localStorage.getItem("srsData") || "{}");
 
+  const showTooltip = (target, symbol, romaji, burmese) => {
+    const tooltip = document.getElementById("kanaTooltip");
+    if (!tooltip) return;
+
+    const sr = srsData[symbol] || { level: 0, nextReview: 0 };
+    let statusClass = "new";
+    let statusText = currentLang === "en" ? "New" : "အသစ်";
+
+    if (sr.level >= 3) {
+      statusClass = "mastered";
+      statusText = currentLang === "en" ? "Mastered" : "ကျွမ်းကျင်";
+    } else if (sr.level > 0) {
+      statusClass = "learning";
+      statusText = currentLang === "en" ? "Learning" : "လေ့လာဆဲ";
+    }
+
+    let reviewText = "";
+    if (sr.level > 0) {
+      const msLeft = sr.nextReview - Date.now();
+      if (msLeft <= 0) {
+        reviewText = currentLang === "en" ? "Review now" : "ယခု ပြန်နွှေးရန်";
+      } else {
+        const hours = Math.round(msLeft / 3600000);
+        if (hours < 1) {
+          reviewText = currentLang === "en" ? "Review in <1h" : "<၁ နာရီအတွင်း ပြန်နွှေးရန်";
+        } else {
+          reviewText = currentLang === "en" ? `Review in ${hours}h` : `${hours} နာရီအတွင်း ပြန်နွှေးရန်`;
+        }
+      }
+    } else {
+      reviewText = currentLang === "en" ? "Not reviewed yet" : "မလေ့လာရသေးပါ";
+    }
+
+    const m = window.kanaMnemonics ? window.kanaMnemonics[symbol] : null;
+    const mText = m ? (currentLang === "my" ? m.my : m.en) : "";
+    const mRowHtml = mText ? `
+      <div class="kana-tooltip-row mnemonic-row">
+        <span class="kana-tooltip-label">💡 Mnemonic</span>
+        <span class="kana-tooltip-val mnemonic-text">${mText}</span>
+      </div>
+    ` : "";
+
+    tooltip.innerHTML = `
+      <div class="kana-tooltip-header">
+        <span class="kana-tooltip-char">${symbol}</span>
+        <span class="kana-tooltip-badge ${statusClass}">${statusText}</span>
+      </div>
+      <div class="kana-tooltip-row">
+        <span class="kana-tooltip-label">Romaji</span>
+        <span class="kana-tooltip-val">${romaji}</span>
+      </div>
+      ${burmese ? `
+      <div class="kana-tooltip-row">
+        <span class="kana-tooltip-label">Pronunciation</span>
+        <span class="kana-tooltip-val">${burmese}</span>
+      </div>
+      ` : ""}
+      <div class="kana-tooltip-row">
+        <span class="kana-tooltip-label">${currentLang === "en" ? "SRS Level" : "SRS အဆင့်"}</span>
+        <span class="kana-tooltip-val">${sr.level}</span>
+      </div>
+      <div class="kana-tooltip-row">
+        <span class="kana-tooltip-label">${currentLang === "en" ? "Status" : "အခြေအနေ"}</span>
+        <span class="kana-tooltip-val" style="color: ${statusClass === 'mastered' ? 'var(--success)' : statusClass === 'learning' ? 'var(--warning)' : 'var(--muted)'}">${reviewText}</span>
+      </div>
+      ${mRowHtml}
+    `;
+
+    tooltip.classList.add("visible");
+    tooltip.setAttribute("aria-hidden", "false");
+
+    // Position tooltip above the target element
+    const rect = target.getBoundingClientRect();
+    const tooltipRect = tooltip.getBoundingClientRect();
+    
+    // Add page scroll offsets
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+
+    let x = rect.left + (rect.width - tooltipRect.width) / 2 + scrollLeft;
+    let y = rect.top - tooltipRect.height - 10 + scrollTop;
+
+    // Prevent overflow on screen edges
+    if (x < 10) x = 10;
+    if (x + tooltipRect.width > window.innerWidth - 10) {
+      x = window.innerWidth - tooltipRect.width - 10;
+    }
+    if (rect.top - tooltipRect.height - 10 < 0) {
+      y = rect.bottom + 10 + scrollTop;
+    }
+
+    tooltip.style.left = `${x}px`;
+    tooltip.style.top = `${y}px`;
+  };
+
+  const hideTooltip = () => {
+    const tooltip = document.getElementById("kanaTooltip");
+    if (!tooltip) return;
+    tooltip.classList.remove("visible");
+    tooltip.setAttribute("aria-hidden", "true");
+  };
+
   const createKanaCard = (symbol, romaji, burmese) => {
     const card = document.createElement("button");
     card.className = symbol ? "kana-card" : "kana-card empty";
@@ -910,11 +1190,16 @@ const KanaApp = (() => {
     card.dataset.romaji = romaji;
     if (burmese) card.dataset.burmese = burmese;
 
+    const m = window.kanaMnemonics ? window.kanaMnemonics[symbol] : null;
+    const hint = m ? (currentLang === "my" ? m.hintMy : m.hintEn) : "";
+    const hintHtml = hint ? `<span class="kana-hint">${hint}</span>` : "";
+
     card.innerHTML = `
       <span>
         <span class="kana">${symbol}</span>
         <span class="romaji">${romaji}</span>
         ${burmese && currentLang === "my" ? `<span class="burmese-spelling">${burmese}</span>` : ""}
+        ${hintHtml}
       </span>
     `;
 
@@ -931,6 +1216,22 @@ const KanaApp = (() => {
         speak(symbol);
         addToBuilder(symbol, romaji, burmese);
       }
+    });
+
+    card.addEventListener("mouseenter", () => {
+      showTooltip(card, symbol, romaji, burmese);
+    });
+
+    card.addEventListener("mouseleave", () => {
+      hideTooltip();
+    });
+
+    card.addEventListener("focus", () => {
+      showTooltip(card, symbol, romaji, burmese);
+    });
+
+    card.addEventListener("blur", () => {
+      hideTooltip();
     });
 
     return card;
@@ -1013,6 +1314,19 @@ const KanaApp = (() => {
   const setHero = (symbol, romaji) => {
     elements.heroSymbol.textContent = symbol;
     elements.heroRomaji.textContent = romaji;
+
+    const heroMnemonicEl = document.getElementById("heroMnemonic");
+    if (heroMnemonicEl) {
+      const m = window.kanaMnemonics ? window.kanaMnemonics[symbol] : null;
+      if (m) {
+        const mText = currentLang === "my" ? m.my : m.en;
+        heroMnemonicEl.innerHTML = `<strong>💡 Mnemonic:</strong> ${mText}`;
+        heroMnemonicEl.style.display = "block";
+      } else {
+        heroMnemonicEl.textContent = "";
+        heroMnemonicEl.style.display = "none";
+      }
+    }
   };
 
   const getQuery = () => {
@@ -1145,10 +1459,45 @@ const KanaApp = (() => {
     }
   };
 
+  const startAudioVisualizer = () => {
+    if (audioVisualizerId) cancelAnimationFrame(audioVisualizerId);
+
+    const waveSpans = document.querySelectorAll("#audioWave span");
+    if (waveSpans.length === 0) return;
+
+    const animate = () => {
+      waveSpans.forEach((span, index) => {
+        const freq = 0.015;
+        const time = Date.now();
+        const baseHeight = 6;
+        const amplitude = 8;
+        const noise = Math.random() * 6;
+        const height = baseHeight + Math.sin(time * freq + index * 1.5) * amplitude + noise;
+        
+        span.style.height = `${Math.max(4, Math.min(24, height))}px`;
+      });
+      audioVisualizerId = requestAnimationFrame(animate);
+    };
+
+    audioVisualizerId = requestAnimationFrame(animate);
+  };
+
+  const stopAudioVisualizer = () => {
+    if (audioVisualizerId) {
+      cancelAnimationFrame(audioVisualizerId);
+      audioVisualizerId = null;
+    }
+    const waveSpans = document.querySelectorAll("#audioWave span");
+    waveSpans.forEach(span => {
+      span.style.height = "";
+    });
+  };
+
   const speak = (text) => {
     if (!("speechSynthesis" in window)) return;
 
     window.speechSynthesis.cancel();
+    stopAudioVisualizer(); // Stop any running visualizer
 
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "ja-JP";
@@ -1160,16 +1509,19 @@ const KanaApp = (() => {
       const audioWave = document.getElementById("audioWave");
       if (audioWave) audioWave.classList.add("playing");
       document.querySelectorAll(".builder-char-tile").forEach(tile => tile.classList.add("speaking"));
+      startAudioVisualizer();
     };
     utterance.onend = () => {
       const audioWave = document.getElementById("audioWave");
       if (audioWave) audioWave.classList.remove("playing");
       document.querySelectorAll(".builder-char-tile").forEach(tile => tile.classList.remove("speaking"));
+      stopAudioVisualizer();
     };
     utterance.onerror = () => {
       const audioWave = document.getElementById("audioWave");
       if (audioWave) audioWave.classList.remove("playing");
       document.querySelectorAll(".builder-char-tile").forEach(tile => tile.classList.remove("speaking"));
+      stopAudioVisualizer();
     };
 
     if (voices.length === 0) {
@@ -1208,6 +1560,101 @@ const KanaApp = (() => {
     elements.progressText.textContent = currentLang === "en"
       ? `${learnedCount}/${mainKana} learned`
       : `${learnedCount}/${mainKana} လေ့လာပြီး`;
+    updateMasteryDashboard();
+  };
+
+  const updateMasteryDashboard = () => {
+    const dashboard = document.getElementById("masteryDashboard");
+    if (!dashboard) return;
+
+    if (currentScript === "numbers") {
+      dashboard.style.display = "none";
+      return;
+    }
+    dashboard.style.display = "block";
+
+    const data = kanaData[currentScript];
+    if (!data || !data.main) return;
+
+    // Calculate overall stats
+    const mainKana = data.main.filter(([s]) => s);
+    const totalCount = mainKana.length;
+    const learnedCount = mainKana.filter(([s]) => learned[s]).length;
+    const overallPercent = totalCount > 0 ? (learnedCount / totalCount) * 100 : 0;
+
+    // Update Radial SVG Progress
+    const radialFill = document.getElementById("dbRadialFill");
+    const radialText = document.getElementById("dbRadialText");
+    if (radialFill && radialText) {
+      const circumference = 2 * Math.PI * 55; // ~345.57
+      const offset = circumference - (overallPercent / 100) * circumference;
+      radialFill.style.strokeDashoffset = offset;
+      radialText.textContent = `${Math.round(overallPercent)}%`;
+    }
+
+    // Populate breakdowns by row group
+    const breakdownContainer = document.getElementById("dbBreakdown");
+    if (breakdownContainer) {
+      breakdownContainer.innerHTML = "";
+      
+      let itemIndex = 0;
+      ROW_GROUPS.forEach((group) => {
+        // Collect all kana symbols in this group from data.main
+        const groupChars = [];
+        for (let c = 0; c < 5; c++) {
+          const entry = data.main[itemIndex + c];
+          if (entry && entry[0]) {
+            groupChars.push(entry[0]);
+          }
+        }
+        itemIndex += 5;
+
+        const groupTotal = groupChars.length;
+        if (groupTotal === 0) return;
+
+        const groupLearned = groupChars.filter(char => learned[char]).length;
+        const groupPercent = (groupLearned / groupTotal) * 100;
+        const groupLabel = currentLang === "my" ? group.my : group.en;
+
+        const rowDiv = document.createElement("div");
+        rowDiv.className = "breakdown-row";
+        rowDiv.innerHTML = `
+          <span class="breakdown-label">${groupLabel}</span>
+          <div class="breakdown-bar-bg">
+            <div class="breakdown-bar-fill" style="width: ${groupPercent}%; background: linear-gradient(90deg, ${group.color} 0%, var(--accent) 100%);"></div>
+          </div>
+          <span class="breakdown-value">${groupLearned}/${groupTotal}</span>
+        `;
+        breakdownContainer.appendChild(rowDiv);
+      });
+    }
+  };
+
+  const initMasteryDashboardCollapse = () => {
+    const header = document.getElementById("dashboardHeader");
+    const content = document.getElementById("dashboardContent");
+    if (!header || !content) return;
+
+    const newHeader = header.cloneNode(true);
+    header.parentNode.replaceChild(newHeader, header);
+
+    newHeader.addEventListener("click", () => {
+      const isCollapsed = content.classList.toggle("collapsed");
+      newHeader.setAttribute("aria-expanded", !isCollapsed);
+      
+      // Update chevron icon
+      const icon = newHeader.querySelector("#dashboardToggleIcon i");
+      if (icon) {
+        icon.className = isCollapsed ? "bi bi-chevron-down" : "bi bi-chevron-up";
+      }
+    });
+
+    newHeader.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        newHeader.click();
+      }
+    });
   };
 
   const toggleDarkMode = () => {
@@ -1596,33 +2043,39 @@ const KanaApp = (() => {
         const td = document.createElement("td");
         td.className = "kana-table-cell";
 
-        if (c < group.count) {
-          const entry = items[itemIndex] || ["", "", ""];
-          const [symbol, romaji, burmese] = entry;
-          itemIndex++;
+        const entry = items[itemIndex] || ["", "", ""];
+        const [symbol, romaji, burmese] = entry;
+        itemIndex++;
 
-          if (symbol) {
-            td.dataset.symbol = symbol;
-            td.dataset.romaji = romaji;
-            if (burmese) td.dataset.burmese = burmese;
-            td.innerHTML = `
-              <span class="kt-symbol">${symbol}</span>
-              <span class="kt-romaji">${romaji}</span>
-              ${burmese ? `<span class="kt-burmese">${burmese}</span>` : ""}
-            `;
-            td.classList.add("kt-clickable");
-            td.addEventListener("click", () => {
-              setHero(symbol, romaji);
-              speak(symbol);
-              td.classList.add("kt-active");
-              setTimeout(() => td.classList.remove("kt-active"), 600);
-            });
-          } else {
-            td.classList.add("kt-empty");
-            td.innerHTML = "<span class='kt-dash'>—</span>";
-          }
+        if (symbol) {
+          td.dataset.symbol = symbol;
+          td.dataset.romaji = romaji;
+          if (burmese) td.dataset.burmese = burmese;
+          td.innerHTML = `
+            <span class="kt-symbol">${symbol}</span>
+            <span class="kt-romaji">${romaji}</span>
+            ${burmese ? `<span class="kt-burmese">${burmese}</span>` : ""}
+          `;
+          td.classList.add("kt-clickable");
+          td.addEventListener("click", () => {
+            setHero(symbol, romaji);
+            speak(symbol);
+            td.classList.add("kt-active");
+            setTimeout(() => td.classList.remove("kt-active"), 600);
+          });
+          td.addEventListener("mouseenter", () => {
+            showTooltip(td, symbol, romaji, burmese);
+          });
+          td.addEventListener("mouseleave", () => {
+            hideTooltip();
+          });
+          td.addEventListener("focus", () => {
+            showTooltip(td, symbol, romaji, burmese);
+          });
+          td.addEventListener("blur", () => {
+            hideTooltip();
+          });
         } else {
-          // structural blank for short rows (y, w, n rows)
           td.classList.add("kt-empty");
           td.innerHTML = "<span class='kt-dash'>—</span>";
         }
@@ -2478,6 +2931,199 @@ const KanaApp = (() => {
     if (heatmapActive) setTimeout(applyHeatmap, 50);
   };
 
+  // Interactive Particle Quiz Logic
+  const particleQuizQuestions = [
+    {
+      sentence: "ねこ {blank} みず ကို のみます။",
+      translationEn: "The cat drinks water. (Subject marker)",
+      translationMy: "ကြောင်သည် ရေကို သောက်သည်။ (ကတ္တားပြဝိဘတ်)",
+      answer: "は",
+      options: ["は", "を", "へ", "de"]
+    },
+    {
+      sentence: "わたし は にほんご {blank} べんきょうします။",
+      translationEn: "I study Japanese. (Direct object marker)",
+      translationMy: "ကျွန်တော်သည် ဂျပန်စာကို လေ့လာသည်။ (ကံပြဝိဘတ်)",
+      answer: "を",
+      options: ["は", "を", "の", "に"]
+    },
+    {
+      sentence: "ともだち は バス {blank} いえ へ いきます။",
+      translationEn: "My friend goes home by bus. (Means/Tool marker)",
+      translationMy: "သူငယ်ချင်းသည် ဘတ်စ်ကားဖြင့် အိမ်သို့ သွားသည်။ (နည်းလမ်းပြဝိဘတ်)",
+      answer: "で",
+      options: ["に", "で", "を", "へ"]
+    },
+    {
+      sentence: "せんせい は がっこう {blank} いきます။",
+      translationEn: "The teacher goes to school. (Destination marker)",
+      translationMy: "ဆရာမသည် ကျောင်းသို့ သွားသည်။ (ဦးတည်ရာပြဝိဘတ်)",
+      answer: "へ",
+      options: ["は", "ကို", "へ", "の"]
+    },
+    {
+      sentence: "わたし {blank} とမိုဒါချိ の うち へ いきます။",
+      translationEn: "My friend's house. (Possession marker)",
+      translationMy: "ကျွန်တော့်သူငယ်ချင်း၏ အိမ်သို့ သွားသည်။ (ပိုင်ဆိုင်မှုပြဝိဘတ်)",
+      answer: "の",
+      options: ["の", "は", "で", "ကို"]
+    }
+  ];
+
+  let currentPqIndex = 0;
+  let pqAnswered = false;
+
+  const initParticleQuiz = () => {
+    currentPqIndex = 0;
+    pqAnswered = false;
+    renderPqQuestion();
+  };
+
+  const renderPqQuestion = () => {
+    const q = particleQuizQuestions[currentPqIndex];
+    const sentenceEl = document.getElementById("pqSentence");
+    const transEl = document.getElementById("pqTranslation");
+    const optionsContainer = document.getElementById("pqOptions");
+    const feedbackEl = document.getElementById("pqFeedback");
+
+    if (!sentenceEl || !transEl || !optionsContainer || !feedbackEl) return;
+
+    pqAnswered = false;
+    feedbackEl.className = "hidden";
+    feedbackEl.textContent = "";
+
+    // Render sentence with Styled blank
+    const blankHtml = `<span id="pqBlank">?</span>`;
+    sentenceEl.innerHTML = q.sentence.replace("{blank}", blankHtml);
+
+    // Set translation based on lang
+    transEl.textContent = currentLang === "my" ? q.translationMy : q.translationEn;
+
+    // Render options
+    optionsContainer.innerHTML = "";
+    q.options.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.className = "pq-option-btn";
+      btn.textContent = opt;
+      btn.addEventListener("click", () => handlePqAnswer(opt, btn));
+      optionsContainer.appendChild(btn);
+    });
+  };
+
+  const handlePqAnswer = (selected, btnElement) => {
+    if (pqAnswered) return;
+    pqAnswered = true;
+
+    const q = particleQuizQuestions[currentPqIndex];
+    const blankEl = document.getElementById("pqBlank");
+    const feedbackEl = document.getElementById("pqFeedback");
+
+    if (!blankEl || !feedbackEl) return;
+
+    // Fill in the blank
+    blankEl.textContent = selected;
+
+    const isCorrect = selected === q.answer;
+
+    if (isCorrect) {
+      blankEl.style.color = "var(--success)";
+      blankEl.style.borderBottomColor = "var(--success)";
+      btnElement.style.background = "var(--success)";
+      btnElement.style.color = "white";
+      btnElement.style.borderColor = "var(--success)";
+      
+      feedbackEl.className = "correct";
+      feedbackEl.textContent = currentLang === "en" ? "Correct! +5 XP" : "မှန်ကန်ပါတယ်! +၅ XP";
+      
+      // Award XP
+      awardXP(5);
+    } else {
+      blankEl.style.color = "var(--error)";
+      blankEl.style.borderBottomColor = "var(--error)";
+      btnElement.style.background = "var(--error)";
+      btnElement.style.color = "white";
+      btnElement.style.borderColor = "var(--error)";
+      
+      feedbackEl.className = "incorrect";
+      feedbackEl.textContent = currentLang === "en" 
+        ? `Incorrect. Correct answer is '${q.answer}'.` 
+        : `မှားယွင်းနေပါသည်။ အဖြေမှန်မှာ '${q.answer}' ဖြစ်သည်။`;
+    }
+
+    // Go to next question after 2.2 seconds
+    setTimeout(() => {
+      currentPqIndex = (currentPqIndex + 1) % particleQuizQuestions.length;
+      renderPqQuestion();
+    }, 2200);
+  };
+
+  // Verb Conjugation Hack Dataset & Logic
+  const verbGroupData = {
+    "1": {
+      baseEn: "飲む (Nomu) ⇄ To Drink",
+      baseMy: "飲む (Nomu) ⇄ သောက်သည်",
+      audio: "のむ",
+      conjugations: [
+        { formEn: "Dictionary (Plain)", formMy: "မူရင်းကြိယာ (Plain)", suffix: "-u", conjugated: "飲む (のむ)", myMatch: "-သည် (သောက်သည်)" },
+        { formEn: "Polite (-masu)", formMy: "ယဉ်ကျေးသောပုံစံ (-masu)", suffix: "-i + ます", conjugated: "飲みます (のみます)", myMatch: "-ပါသည် (သောက်ပါသည်)" },
+        { formEn: "Polite Negative", formMy: "ယဉ်ကျေးသော အငြင်းပုံစံ", suffix: "-i + ません", conjugated: "飲みません (のみません)", myMatch: "မ- ... -ပါ (မသောက်ပါ)" },
+        { formEn: "Polite Past", formMy: "ယဉ်ကျေးသော အတိတ်ကာလ", suffix: "-i + ました", conjugated: "飲みました (のみました)", myMatch: "-ခဲ့ပါသည် (သောက်ခဲ့ပါသည်)" }
+      ]
+    },
+    "2": {
+      baseEn: "食べる (Taberu) ⇄ To Eat",
+      baseMy: "食べる (Taberu) ⇄ စားသည်",
+      audio: "たべる",
+      conjugations: [
+        { formEn: "Dictionary (Plain)", formMy: "မူရင်းကြိယာ (Plain)", suffix: "-ru", conjugated: "食べる (たべる)", myMatch: "-သည် (စားသည်)" },
+        { formEn: "Polite (-masu)", formMy: "ယဉ်ကျေးသောပုံစံ (-masu)", suffix: "drop -ru + ます", conjugated: "食べます (たべます)", myMatch: "-ပါသည် (စားပါသည်)" },
+        { formEn: "Polite Negative", formMy: "ယဉ်ကျေးသော အငြင်းပုံစံ", suffix: "drop -ru + ません", conjugated: "食べません (たべません)", myMatch: "မ- ... -ပါ (မစားပါ)" },
+        { formEn: "Polite Past", formMy: "ယဉ်ကျေးသော အတိတ်ကာလ", suffix: "drop -ru + ました", conjugated: "食べました (たべました)", myMatch: "-ခဲ့ပါသည် (စားခဲ့ပါသည်)" }
+      ]
+    },
+    "3": {
+      baseEn: "する (Suru) ⇄ To Do",
+      baseMy: "する (Suru) ⇄ ပြုလုပ်သည်",
+      audio: "する",
+      conjugations: [
+        { formEn: "Dictionary (Plain)", formMy: "မူရင်းကြိယာ (Plain)", suffix: "irregular", conjugated: "する", myMatch: "-သည် (ပြုလုပ်သည်)" },
+        { formEn: "Polite (-masu)", formMy: "ယဉ်ကျေးသောပုံစံ (-masu)", suffix: "します (shimasu)", conjugated: "します", myMatch: "-ပါသည် (ပြုလုပ်ပါသည်)" },
+        { formEn: "Polite Negative", formMy: "ယဉ်ကျေးသော အငြင်းပုံစံ", suffix: "しません (shimenen)", conjugated: "しません", myMatch: "မ- ... -ပါ (မပြုလုပ်ပါ)" }, // corrected shimenen typo
+        { formEn: "Polite Past", formMy: "ယဉ်ကျေးသော အတိတ်ကာလ", suffix: "しました (shimashita)", conjugated: "しました", myMatch: "-ခဲ့ပါသည် (ပြုလုပ်ခဲ့ပါသည်)" }
+      ]
+    }
+  };
+
+  let activeVerbGroupId = "1";
+
+  const renderVerbConjugations = (groupId = activeVerbGroupId) => {
+    activeVerbGroupId = groupId;
+    const data = verbGroupData[groupId];
+    const exampleLabel = document.getElementById("vcVerbExample");
+    const speakBtn = document.getElementById("speakVerbBtn");
+    const tbody = document.getElementById("vcConjugationBody");
+
+    if (!exampleLabel || !speakBtn || !tbody) return;
+
+    // Set header label based on current language
+    exampleLabel.textContent = currentLang === "my" ? data.baseMy : data.baseEn;
+    speakBtn.dataset.text = data.audio;
+
+    // Build rows
+    tbody.innerHTML = "";
+    data.conjugations.forEach(c => {
+      const formText = currentLang === "my" ? c.formMy : c.formEn;
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td style="font-weight: 700; color: var(--muted);">${formText}</td>
+        <td><code class="jp-highlight" style="font-size: 13px;">${c.suffix}</code></td>
+        <td style="font-family: 'Noto Sans JP', sans-serif; font-size: 16px; font-weight: 800; color: var(--accent);">${c.conjugated}</td>
+        <td><strong class="mm-highlight">${c.myMatch}</strong></td>
+      `;
+      tbody.appendChild(row);
+    });
+  };
+
   const init = () => {
     window.currentScript = currentScript;
     window.awardXP = awardXP;
@@ -2640,6 +3286,39 @@ const KanaApp = (() => {
     initVoiceSearch();
     initPanelDraggable();
     initPanelCollapse();
+    initMasteryDashboardCollapse();
+
+    // Sentence speak triggers
+    document.querySelectorAll(".speak-sentence-btn").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        speak(btn.dataset.text);
+      });
+    });
+
+    // Particle quiz init
+    initParticleQuiz();
+
+    // Verb conjugation group switches
+    document.querySelectorAll(".verb-tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".verb-tab-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        renderVerbConjugations(btn.dataset.group);
+      });
+    });
+
+    // Verb speak triggers
+    document.getElementById("speakVerbBtn")?.addEventListener("click", () => {
+      const btn = document.getElementById("speakVerbBtn");
+      if (btn && btn.dataset.text) {
+        speak(btn.dataset.text);
+      }
+    });
+
+    // Render initial verb conjugation
+    renderVerbConjugations();
+
     updateLanguageUI();
     updateGamificationUI();
     renderDailyChallenge();

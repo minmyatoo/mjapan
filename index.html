@@ -52,6 +52,7 @@
             <span></span>
             <span></span>
           </div>
+          <p class="hero-mnemonic" id="heroMnemonic" aria-label="Mnemonic guide"></p>
         </div>
       </section>
 
@@ -130,6 +131,27 @@
         </div>
       </section>
 
+      <!-- Mastery Dashboard -->
+      <section class="mastery-dashboard" id="masteryDashboard" aria-label="Mastery Analytics Dashboard">
+        <div class="dashboard-header" id="dashboardHeader" role="button" aria-expanded="true" aria-controls="dashboardContent" tabindex="0">
+          <h3><i class="bi bi-pie-chart-fill"></i> <span id="dbTitle">Mastery Dashboard</span></h3>
+          <span class="dashboard-toggle-icon" id="dashboardToggleIcon"><i class="bi bi-chevron-up"></i></span>
+        </div>
+        <div class="dashboard-content" id="dashboardContent">
+          <div class="dashboard-radial-panel">
+            <svg class="radial-progress-svg">
+              <circle class="radial-bg" cx="70" cy="70" r="55"></circle>
+              <circle class="radial-fill" id="dbRadialFill" cx="70" cy="70" r="55" stroke-dasharray="345.57" stroke-dashoffset="345.57"></circle>
+              <text class="radial-text-pct" id="dbRadialText" x="70" y="70">0%</text>
+            </svg>
+            <div class="radial-label" id="dbOverallProgress">Overall Progress</div>
+          </div>
+          <div class="dashboard-breakdown-panel" id="dbBreakdown">
+            <!-- Will be dynamically populated with row progress by script.js -->
+          </div>
+        </div>
+      </section>
+
       <section class="chart-section" aria-labelledby="mainChartTitle">
         <div class="section-head">
           <div>
@@ -200,6 +222,184 @@
           </div>
         </div>
       </div>
+
+      <!-- Grammar & Particle Bridge Section -->
+      <section class="chart-section" id="grammarBridgeSection" aria-labelledby="grammarBridgeTitle">
+        <div class="section-head">
+          <h2 id="grammarBridgeTitle">Grammar & Particle Bridge (MM ⇄ JP)</h2>
+          <p id="grammarBridgeDesc">Hacking Japanese vocabulary: identical word order (SOV) and particle-for-particle translation.</p>
+        </div>
+        <div class="grammar-bridge-container">
+          <div class="particle-table-wrapper">
+            <h3 id="gbParticlesTitle">1. Particle Hack Shortcut</h3>
+            <table class="grammar-table">
+              <thead>
+                <tr>
+                  <th id="gbColJpPart">Japanese Particle</th>
+                  <th id="gbColMmPart">Myanmar Equivalent</th>
+                  <th id="gbColFunc">Function / Usage</th>
+                  <th id="gbColEx">Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong class="jp-highlight">は (wa)</strong> / <strong class="jp-highlight">が (ga)</strong></td>
+                  <td><strong class="mm-highlight">သည် (thi) / က (ka)</strong></td>
+                  <td id="gbFuncSubj">Subject / Topic marker</td>
+                  <td>わたし<strong>は</strong> (ကျွန်တော်<strong>သည်</strong>)</td>
+                </tr>
+                <tr>
+                  <td><strong class="jp-highlight">を (wo)</strong></td>
+                  <td><strong class="mm-highlight">ကို (ko)</strong></td>
+                  <td id="gbFuncObj">Direct object marker</td>
+                  <td>ごはん<strong>を</strong> (ထမင်း<strong>ကို</strong>)</td>
+                </tr>
+                <tr>
+                  <td><strong class="jp-highlight">に (ni)</strong> / <strong class="jp-highlight">へ (e)</strong></td>
+                  <td><strong class="mm-highlight">သို့ (tho) / ဆီသို့</strong></td>
+                  <td id="gbFuncDest">Destination / Time / Location</td>
+                  <td>がっこう<strong>へ</strong> (ကျောင်း<strong>သို့</strong>)</td>
+                </tr>
+                <tr>
+                  <td><strong class="jp-highlight">で (de)</strong></td>
+                  <td><strong class="mm-highlight">မှာ (hmar) / နဲ့ (nae)</strong></td>
+                  <td id="gbFuncMeans">Action location / Means / Tool</td>
+                  <td>うち<strong>で</strong> (အိမ်<strong>မှာ</strong>) / バス<strong>で</strong> (ဘတ်စ်ကား<strong>နဲ့</strong>)</td>
+                </tr>
+                <tr>
+                  <td><strong class="jp-highlight">の (no)</strong></td>
+                  <td><strong class="mm-highlight">၏ (ei) / ရဲ့ (yae)</strong></td>
+                  <td id="gbFuncPoss">Possession (of / 's)</td>
+                  <td>わたし<strong>の</strong>ねこ (ကျွန်တော်<strong>ရဲ့</strong>ကြောင်)</td>
+                </tr>
+                <tr>
+                  <td><strong class="jp-highlight">から (kara)</strong> ... <strong class="jp-highlight">まで (made)</strong></td>
+                  <td><strong class="mm-highlight">မှ (hma)</strong> ... <strong class="mm-highlight">အထိ (a-hti)</strong></td>
+                  <td id="gbFuncRange">From ... To (Range)</td>
+                  <td>9時<strong>から</strong> (၉နာရီ<strong>မှ</strong>) 5時<strong>まで</strong> (၅နာရီ<strong>အထိ</strong>)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="sentence-hack-wrapper">
+            <h3 id="gbSentencesTitle">2. 1:1 Word Order Sentence Match</h3>
+            <p class="sentence-hack-intro" id="gbSentencesIntro">Since both languages are <strong>SOV (Subject-Object-Verb)</strong>, you can construct Japanese sentences by translating word-by-word from Myanmar!</p>
+            <div class="interactive-sentences">
+              <div class="sentence-match-card">
+                <div class="sm-card-header">
+                  <div class="sm-label" id="gbEx1Label">Example 1: "I eat rice."</div>
+                  <button class="speak-sentence-btn" data-text="わたしはごはんをたべます" title="Speak Sentence"><i class="bi bi-volume-up-fill"></i></button>
+                </div>
+                <div class="sm-comparison">
+                  <div class="sm-item"><span class="sm-jp">わたしは</span><span class="sm-mm">ကျွန်တော်သည်</span><span class="sm-en">I (subject)</span></div>
+                  <div class="sm-item"><span class="sm-jp">ごはんを</span><span class="sm-mm">ထမင်းကို</span><span class="sm-en">rice (object)</span></div>
+                  <div class="sm-item"><span class="sm-jp">たべます。</span><span class="sm-mm">စားပါသည်၊၊</span><span class="sm-en">eat (verb)</span></div>
+                </div>
+              </div>
+              <div class="sentence-match-card">
+                <div class="sm-card-header">
+                  <div class="sm-label" id="gbEx2Label">Example 2: "I go to school by bus."</div>
+                  <button class="speak-sentence-btn" data-text="わたしはバスでがっこうへいきます" title="Speak Sentence"><i class="bi bi-volume-up-fill"></i></button>
+                </div>
+                <div class="sm-comparison">
+                  <div class="sm-item"><span class="sm-jp">わたしは</span><span class="sm-mm">ကျွန်တော်သည်</span><span class="sm-en">I (subject)</span></div>
+                  <div class="sm-item"><span class="sm-jp">バスで</span><span class="sm-mm">ဘတ်စ်ကားဖြင့်</span><span class="sm-en">by bus (means)</span></div>
+                  <div class="sm-item"><span class="sm-jp">がっこうへ</span><span class="sm-mm">ကျောင်းသို့</span><span class="sm-en">to school (dest)</span></div>
+                  <div class="sm-item"><span class="sm-jp">いきます。</span><span class="sm-mm">သွားပါသည်၊၊</span><span class="sm-en">go (verb)</span></div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="interactive-particle-quiz">
+              <h4 id="gbQuizTitle">💡 Particle Quick Practice</h4>
+              <p id="gbQuizIntro">Fill in the blank with the correct Japanese particle:</p>
+              <div class="pq-card">
+                <div id="pqSentence">
+                  ねこ <span id="pqBlank">?</span> みず ကို のみます။
+                </div>
+                <div id="pqTranslation">
+                  (The cat drinks water. / ကြောင်သည် ရေကို သောက်သည်။)
+                </div>
+                <div class="pq-options" id="pqOptions">
+                  <!-- Dynamically populated buttons -->
+                </div>
+                <div id="pqFeedback" class="hidden"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Verb Conjugation Hack Wrapper -->
+          <div class="verb-hack-wrapper">
+            <h3 id="gbVerbTitle">3. Japanese Verb Types & Conjugation Hack</h3>
+            <p class="verb-hack-intro" id="gbVerbIntro">Japanese verbs have 3 main groups. Suffix conjugations map 1:1 to Myanmar verb suffixes!</p>
+            
+            <!-- Verb Classification Tree Chart -->
+            <div class="tree-chart" aria-label="Verb classification tree chart">
+              <div class="tree-root" id="tcRoot">Japanese Verbs (動詞 - Doushi)</div>
+              
+              <div class="tree-branches">
+                <!-- Group 1 -->
+                <div class="tree-branch">
+                  <div class="branch-node" id="tcB1">Group 1 (Godan / -u)<br><small>Ends in ~u (e.g. 飲む Nomu)</small></div>
+                  <div class="leaf-nodes">
+                    <div class="leaf-node" id="tcL1_1">Polite: 飲みます (-imasu)</div>
+                    <div class="leaf-node" id="tcL1_2">Negative: 飲みません (-imasen)</div>
+                    <div class="leaf-node" id="tcL1_3">Past: 飲みました (-imashita)</div>
+                  </div>
+                </div>
+                
+                <!-- Group 2 -->
+                <div class="tree-branch">
+                  <div class="branch-node" id="tcB2">Group 2 (Ichidan / -ru)<br><small>Ends in ~iru / ~eru (e.g. 食べる Taberu)</small></div>
+                  <div class="leaf-nodes">
+                    <div class="leaf-node" id="tcL2_1">Polite: 食べます (-masu)</div>
+                    <div class="leaf-node" id="tcL2_2">Negative: 食べません (-masen)</div>
+                    <div class="leaf-node" id="tcL2_3">Past: 食べました (-mashita)</div>
+                  </div>
+                </div>
+                
+                <!-- Group 3 -->
+                <div class="tree-branch">
+                  <div class="branch-node" id="tcB3">Group 3 (Irregular)<br><small>する (To Do) / くる (To Come)</small></div>
+                  <div class="leaf-nodes">
+                    <div class="leaf-node" id="tcL3_1">Polite: します / きます</div>
+                    <div class="leaf-node" id="tcL3_2">Negative: しません / きません</div>
+                    <div class="leaf-node" id="tcL3_3">Past: しました / きました</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="verb-group-tabs" id="verbGroupTabs">
+              <button class="verb-tab-btn active" data-group="1" id="btnVerbG1">Group 1 (Godan / -u)</button>
+              <button class="verb-tab-btn" data-group="2" id="btnVerbG2">Group 2 (Ichidan / -ru)</button>
+              <button class="verb-tab-btn" data-group="3" id="btnVerbG3">Group 3 (Irregular)</button>
+            </div>
+            
+            <div class="verb-conjugation-card">
+              <div class="verb-card-header">
+                <span id="vcVerbExample" class="verb-example-label">飲む (のむ - Nomu) ⇄ သောက်သည် (Drink)</span>
+                <button class="speak-verb-btn" id="speakVerbBtn" data-text="のむ" title="Speak Verb"><i class="bi bi-volume-up-fill"></i> Speak</button>
+              </div>
+              
+              <table class="conjugation-table">
+                <thead>
+                  <tr>
+                    <th id="gbVcForm">Form</th>
+                    <th id="gbVcSfx">Japanese Suffix</th>
+                    <th id="gbVcConj">Conjugated Verb</th>
+                    <th id="gbVcMm">Myanmar Suffix Match</th>
+                  </tr>
+                </thead>
+                <tbody id="vcConjugationBody">
+                  <!-- Dynamically rendered rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section class="chart-section" aria-labelledby="practiceWordsTitle">
         <div class="section-head">
@@ -356,6 +556,9 @@
         <input type="text" id="invaderInput" placeholder="Type romaji here to shoot..." autocomplete="off" style="width: 100%; padding: 16px; font-size: 18px; text-align: center; border-radius: 999px; border: 2px solid var(--line); display: none;">
       </div>
     </div>
+
+    <!-- Tooltip element for interactive card details -->
+    <div id="kanaTooltip" class="kana-tooltip" role="tooltip" aria-hidden="true"></div>
 
     <script src="words.js"></script>
     <script src="script.js"></script>
